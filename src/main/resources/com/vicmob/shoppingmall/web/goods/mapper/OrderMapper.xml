@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goods.dao.OrderMapper">
+
+	<sql id="order">
+		orderId,
+		minaId,
+		customerId,
+		payType,
+		orderNumber,
+		collageNo,
+		name,
+		phoneNumber,
+		addressDetails,
+		goodsDetails,
+		orderStartTime,
+		orderEndTime,
+		orderPayTime,
+		orderRefundTime,
+		deliveryMoney,
+		totalMoney,
+		cancelReason,
+		refuseReason,
+		drawbackReason,
+		orderStatus,
+		remarks,
+		prepayId,
+		formId,
+		isEvaluate,
+		distributionUser
+	</sql>
+
+    <sql id="order1">
+		a.orderId,
+		a.minaId,
+		a.customerId,
+		a.payType,
+		a.orderNumber,
+		a.collageNo,
+		a.name,
+		a.phoneNumber,
+		a.addressDetails,
+		a.goodsDetails,
+		a.orderStartTime,
+		a.orderEndTime,
+		a.orderPayTime,
+		a.orderRefundTime,
+		a.deliveryMoney,
+		a.totalMoney,
+		a.cancelReason,
+		a.refuseReason,
+		a.drawbackReason,
+		a.orderStatus,
+		a.remarks,
+		a.prepayId,
+		a.formId,
+		a.isEvaluate,
+		a.distributionUser,
+		b.collageStatus
+	</sql>
+
+
+	<select id="getOrderList" resultType="com.vicmob.shoppingmall.web.goods.entity.Order">
+		select  <include refid ="order1" />  from mall_order a left join mall_goods_collage b on a.collageNo = b.collageNo
+		<where>
+			<if test="o.orderNumber != null ">
+				and a.orderNumber like CONCAT('%',#{o.orderNumber},'%')
+			</if>
+			<if test="o.orderStatus != null ">
+				and a.orderStatus = #{o.orderStatus}
+			</if>
+			and  a.minaId = #{minaId}
+		</where>
+	</select>
+
+	<select id="getByOrderId" resultType="com.vicmob.shoppingmall.web.goods.entity.Order">
+		select  <include refid ="order" />  from mall_order
+		<where>
+			orderId = #{orderId}
+		</where>
+	</select>
+
+
+	<select id="getByOrderNo" resultType="com.vicmob.shoppingmall.web.goods.entity.Order">
+		select  <include refid ="order" />  from mall_order
+		<where>
+			orderNumber = #{orderNumber}
+		</where>
+	</select>
+
+	<update id="updatePrepayId" >
+		update mall_order set prepayId = #{prepayId},orderStatus = #{status}
+		<where>
+			orderId = #{orderId} and  minaId = #{minaId}
+		</where>
+	</update>
+
+	<update id="updatPayedStatus" >
+		update mall_order set orderStatus = #{status} , orderPayTime = #{date}
+		<where>
+			orderNumber = #{orderNumber}
+		</where>
+    </update>
+
+	<update id="orderCancel" >
+		update mall_order set orderStatus = #{status} , cancelReason = #{cancelReason}
+		<where>
+			orderId = #{orderId}
+		</where>
+	</update>
+
+	<update id="refund" >
+		update mall_order set orderStatus = #{status},refuseReason = #{refuseReason}
+		<where>
+			orderId = #{orderId}
+		</where>
+	</update>
+
+	<update id="updatOrderStatus" >
+		update mall_order set orderStatus = #{status}
+		<where>
+			orderNumber = #{orderNumber}
+		</where>
+	</update>
+
+</mapper>

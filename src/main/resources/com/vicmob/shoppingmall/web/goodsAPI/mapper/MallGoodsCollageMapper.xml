@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goodsAPI.dao.MallGoodsCollageMapper" >
+  <resultMap id="BaseResultMap" type="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsCollage" >
+    <id column="collageId" property="collageid" jdbcType="INTEGER" />
+    <result column="collageActivityId" property="collageactivityid" jdbcType="VARCHAR" />
+    <result column="minaId" property="minaid" jdbcType="INTEGER" />
+    <result column="customerId" property="customerid" jdbcType="INTEGER" />
+    <result column="collageStartDate" property="collagestartdate" jdbcType="TIMESTAMP" />
+    <result column="goodsId" property="goodsid" jdbcType="INTEGER" />
+    <result column="collageNo" property="collageno" jdbcType="VARCHAR" />
+    <result column="goodsName" property="goodsname" jdbcType="VARCHAR" />
+    <result column="alCollagePeople" property="alcollagepeople" jdbcType="INTEGER" />
+    <result column="collageStatus" property="collagestatus" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    collageId,collageActivityId, minaId, customerId, collageStartDate, goodsId, collageNo, goodsName, alCollagePeople,
+    collageStatus
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsCollageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mall_goods_collage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleAndPage" resultMap="BaseResultMap" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsCollageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mall_goods_collage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsCollageExample" >
+    delete from mall_goods_collage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsCollageExample" resultType="java.lang.Integer" >
+    select count(*) from mall_goods_collage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mall_goods_collage
+    <set >
+      <if test="record.collageid != null" >
+        collageId = #{record.collageid,jdbcType=INTEGER},
+      </if>
+      <if test="record.collageactivityid != null" >
+        collageActivityId = #{record.collageactivityid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.minaid != null" >
+        minaId = #{record.minaid,jdbcType=INTEGER},
+      </if>
+      <if test="record.customerid != null" >
+        customerId = #{record.customerid,jdbcType=INTEGER},
+      </if>
+      <if test="record.collagestartdate != null" >
+        collageStartDate = #{record.collagestartdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.goodsid != null" >
+        goodsId = #{record.goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="record.collageno != null" >
+        collageNo = #{record.collageno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsname != null" >
+        goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alcollagepeople != null" >
+        alCollagePeople = #{record.alcollagepeople,jdbcType=INTEGER},
+      </if>
+      <if test="record.collagestatus != null" >
+        collageStatus = #{record.collagestatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mall_goods_collage
+    set collageId = #{record.collageid,jdbcType=INTEGER},
+    collageActivityId = #{record.collageactivityid,jdbcType=VARCHAR},
+      minaId = #{record.minaid,jdbcType=INTEGER},
+      customerId = #{record.customerid,jdbcType=INTEGER},
+      collageStartDate = #{record.collagestartdate,jdbcType=TIMESTAMP},
+      goodsId = #{record.goodsid,jdbcType=INTEGER},
+      collageNo = #{record.collageno,jdbcType=VARCHAR},
+      goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      alCollagePeople = #{record.alcollagepeople,jdbcType=INTEGER},
+      collageStatus = #{record.collagestatus,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mall_goods_collage
+    where collageId = #{collageid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsCollage" useGeneratedKeys="true" keyProperty="collageid" >
+    insert into mall_goods_collage (collageActivityId,minaId, customerId, collageStartDate,
+      goodsId, collageNo, goodsName, 
+      alCollagePeople, collageStatus)
+    values (#{collageactivityid,jdbcType=VARCHAR},#{minaid,jdbcType=INTEGER}, #{customerid,jdbcType=INTEGER}, #{collagestartdate,jdbcType=TIMESTAMP},
+      #{goodsid,jdbcType=INTEGER}, #{collageno,jdbcType=VARCHAR}, #{goodsname,jdbcType=VARCHAR}, 
+      #{alcollagepeople,jdbcType=INTEGER}, #{collagestatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsCollage" useGeneratedKeys="true" keyProperty="collageid" >
+    insert into mall_goods_collage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      collageActivityId,
+      minaId,
+      customerId,
+      collageStartDate,
+      goodsId,
+      collageNo,
+      goodsName,
+      alCollagePeople,
+      collageStatus,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{collageactivityid,jdbcType=VARCHAR},
+      #{minaid,jdbcType=INTEGER},
+      #{customerid,jdbcType=INTEGER},
+      #{collagestartdate,jdbcType=TIMESTAMP},
+      #{goodsid,jdbcType=INTEGER},
+      #{collageno,jdbcType=VARCHAR},
+      #{goodsname,jdbcType=VARCHAR},
+      #{alcollagepeople,jdbcType=INTEGER},
+      #{collagestatus,jdbcType=INTEGER},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsCollage" >
+    update mall_goods_collage
+    <set >
+      <if test="collageactivityid != null" >
+        collageActivityId = #{collageactivityid,jdbcType=VARCHAR},
+      </if>
+      <if test="minaid != null" >
+        minaId = #{minaid,jdbcType=INTEGER},
+      </if>
+      <if test="customerid != null" >
+        customerId = #{customerid,jdbcType=INTEGER},
+      </if>
+      <if test="collagestartdate != null" >
+        collageStartDate = #{collagestartdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodsid != null" >
+        goodsId = #{goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="collageno != null" >
+        collageNo = #{collageno,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsname != null" >
+        goodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="alcollagepeople != null" >
+        alCollagePeople = #{alcollagepeople,jdbcType=INTEGER},
+      </if>
+      <if test="collagestatus != null" >
+        collageStatus = #{collagestatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where collageId = #{collageid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsCollage" >
+    update mall_goods_collage
+    set collageActivityId = #{collageactivityid,jdbcType=VARCHAR},
+      minaId = #{minaid,jdbcType=INTEGER},
+      customerId = #{customerid,jdbcType=INTEGER},
+      collageStartDate = #{collagestartdate,jdbcType=TIMESTAMP},
+      goodsId = #{goodsid,jdbcType=INTEGER},
+      collageNo = #{collageno,jdbcType=VARCHAR},
+      goodsName = #{goodsname,jdbcType=VARCHAR},
+      alCollagePeople = #{alcollagepeople,jdbcType=INTEGER},
+      collageStatus = #{collagestatus,jdbcType=INTEGER}
+    where collageId = #{collageid,jdbcType=INTEGER}
+  </update>
+
+  <select id="getCollageList" resultType="com.vicmob.shoppingmall.web.goodsAPI.model.MallGoodsCollageVO">
+    select c.* from
+    (select a.collageId,a.collageNo,group_concat(DISTINCT b.orderNumber SEPARATOR ',') AS orderNumber,a.goodsName,
+    a.collageStartDate,d.collageValidDate,d.collageActivityPeople,a.alCollagePeople,a.collageStatus,
+    DATE_ADD(a.collageStartDate,INTERVAL d.collageValidDate HOUR) as collageEndDate,d.collageActivityName
+    from mall_goods_collage a
+    LEFT JOIN mall_order b on a.collageNo = b.collageNo
+    LEFT JOIN mall_goods_collage_activity d on a.collageActivityId = d.collageActivityId
+    where a.minaId = #{record.minaid} GROUP BY a.collageId)c
+    where 1=1
+    <if test="record.collageno!=null and record.collageno!='' ">
+      and c.collageNo like concat ("%",#{record.collageno},"%")
+    </if>
+    <if test="record.collageactivityname!=null and record.collageactivityname!='' ">
+      and c.collageActivityName = #{record.collageactivityname}
+    </if>
+    <if test="record.collagestartdate!=null">
+      and c.collageStartDate &gt;= #{record.collagestartdate}
+    </if>
+    <if test="record.collageenddate!=null">
+      and c.collageEndDate &lt;= #{record.collageenddate}
+    </if>
+    order by c.collageStartDate desc
+  </select>
+
+  <select id="getCollageByGoodsId" resultType="com.vicmob.shoppingmall.web.goodsAPI.model.MallGoodsCollageParamVO">
+    select DISTINCT a.collageId,a.collageNo,b.customerId,b.nickName,b.avatar,
+    UNIX_TIMESTAMP(DATE_ADD(a.collageStartDate,INTERVAL d.collageValidDate HOUR))-UNIX_TIMESTAMP(now()) as surplusTime,
+    (d.collageActivityPeople-a.alCollagePeople) as remainingNumber
+    from mall_goods_collage a
+    LEFT JOIN bc_customer b on a.customerId = b.customerId
+    LEFT JOIN mall_goods_collage_activity d on a.collageActivityId = d.collageActivityId
+    where a.minaId = #{minaId} and a.goodsId = #{goodsId} and d.collageActivityStatus = 1 and d.deleteFlag = 0 and a.collageStatus = 1
+  </select>
+
+  <select id="getMallGoodsCollageByNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List"/>
+    from mall_goods_collage
+    where collageNo = #{collageNo}
+  </select>
+
+  <update id="updateCollageStatus">
+    update mall_goods_collage set collageStatus = 3
+    where minaId = #{minaId} and goodsId = #{goodsId} and (collageStatus = 0 or collageStatus = 1)
+  </update>
+
+  <select id="selectCollageOvertime" resultMap="BaseResultMap">
+    select c.* from (select DISTINCT a.*,b.collageValidDate
+    from mall_goods_collage a left join mall_goods_collage_activity b on a.collageActivityId = b.collageActivityId
+    where (a.collageStatus = 1 or a.collageStatus=0) and b.deleteFlag = 0 and b.collageActivityStatus = 1)c
+    where DATE_FORMAT(now(),"%Y-%m-%d %H:%i:%S") >= DATE_FORMAT(DATE_ADD(c.collageStartDate,INTERVAL c.collageValidDate HOUR),"%Y-%m-%d %H:%i:%S")
+  </select>
+
+  <resultMap id="BaseResultMap1" type="com.vicmob.shoppingmall.web.goodsAPI.model.MallGoodsCollageDetailVO" >
+    <result column="collageId" property="collageId" jdbcType="INTEGER" />
+    <result column="collageNo" property="collageNo" jdbcType="VARCHAR" />
+    <result column="surplusTime" property="surplusTime" jdbcType="TIMESTAMP" />
+    <result column="remainingNumber" property="remainingNumber" jdbcType="INTEGER" />
+  <collection property="customerVO" ofType="com.vicmob.shoppingmall.web.goodsAPI.model.CustomerVO">
+    <result column="customerId" property="customerId" jdbcType="INTEGER" />
+    <result column="nickName" property="nickName" jdbcType="VARCHAR" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+  </collection>
+  </resultMap>
+
+  <select id="getGoodsCollageDetail" resultMap="BaseResultMap1" parameterType="java.lang.Integer">
+    select DISTINCT a.collageId,a.collageNo,a.customerId,c.nickName,c.avatar,
+    UNIX_TIMESTAMP(DATE_ADD(a.collageStartDate,INTERVAL d.collageValidDate HOUR))-UNIX_TIMESTAMP(now()) as surplusTime,
+    (d.collageActivityPeople-a.alCollagePeople) as remainingNumber
+    from mall_goods_collage a
+    left join bc_customer c on a.customerId = c.customerId
+    LEFT JOIN mall_goods_collage_activity d on a.collageActivityId = d.collageActivityId
+    where collageId =  #{collageId} and a.collageStatus = 1 and d.deleteFlag = 0 and d.collageActivityStatus = 1
+    union all
+    select DISTINCT a.collageId,a.collageNo,c.customerId,c.nickName,c.avatar,
+    UNIX_TIMESTAMP(DATE_ADD(a.collageStartDate,INTERVAL d.collageValidDate HOUR))-UNIX_TIMESTAMP(now()) as surplusTime,
+    (d.collageActivityPeople-a.alCollagePeople) as remainingNumber
+    from mall_goods_collage a
+    left join mall_order b on a.collageNo = b.collageNo
+    left join bc_customer c on b.customerId = c.customerId
+    LEFT JOIN mall_goods_collage_activity d on a.collageActivityId = d.collageActivityId
+    where collageId = #{collageId} and a.collageStatus = 1 and d.deleteFlag = 0 and
+    d.collageActivityStatus = 1 and b.orderStatus = 1 and b.deleteFlag = 0
+    and c.customerId not in (select customerId from mall_goods_collage where collageId = #{collageId})
+  </select>
+
+  <select id="checkCollageLose" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select count(1) from mall_goods_collage where collageNo = #{collageNo} and collageStatus = 3
+  </select>
+
+  <select id="checkCollageComplete" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select count(1) from mall_goods_collage where collageNo = #{collageNo} and collageStatus = 2
+  </select>
+
+  <update id="updateCollageStatusByCustomerId">
+    update mall_goods_collage set collageStatus = 3
+    where collageNo = #{collageNo} and customerId = #{customerId} and collageStatus = 0
+  </update>
+</mapper>

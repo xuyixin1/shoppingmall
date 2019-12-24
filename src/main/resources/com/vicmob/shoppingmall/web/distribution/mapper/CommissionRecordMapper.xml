@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.distribution.dao.CommissionRecordMapper">
+
+	<insert id="addCommissionRecord" useGeneratedKeys="true" keyProperty="c.id">
+		insert into mall_commission_record (minaId,orderNumber,goodsId,goodsName,picUrl,commissionMode,fixedCommission,percentageCommission,totalMoney,payMoney,commission,status,distributionUser,openId,date,payDate)
+	                values(#{c.minaId},#{c.orderNumber},#{c.goodsId},#{c.goodsName},#{c.picUrl},#{c.commissionMode},#{c.fixedCommission},#{c.percentageCommission},#{c.totalMoney},#{c.payMoney},#{c.commission},#{c.status},#{c.distributionUser},#{c.openId},#{c.date},#{c.payDate})
+	</insert>
+
+    <select id="getCommissionRecordListByStatus" resultType="com.vicmob.shoppingmall.web.distribution.entity.CommissionRecord">
+        select * from mall_commission_record
+        <where>
+            status = #{status}
+        </where>
+    </select>
+
+    <select id="getCommissionRecordList" resultType="com.vicmob.shoppingmall.web.distribution.entity.CommissionRecord">
+        select a.id,a.minaId,a.orderNumber,a.goodsId,a.goodsName,a.picUrl,a.commissionMode,a.fixedCommission,a.percentageCommission,a.totalMoney,a.payMoney,a.commission,a.status,a.distributionUser,a.openId,b.nickName,a.date,a.payDate from mall_commission_record a
+                       left join bc_customer b on a.openId = b.openId and a.minaId = b.minaId
+        <where>
+            a.distributionUser = #{distributionUser} and a.minaId = #{minaId}
+            <if test="orderNumber != null  and orderNumber != ''">
+                AND a.orderNumber like CONCAT('%',#{orderNumber},'%')
+            </if>
+            and a.status in
+            <foreach collection="statusList" item="status" index="index" open="(" close=")" separator=",">
+                #{status}
+            </foreach>
+        </where>
+    </select>
+
+    <update id="updateCommissionStatus">
+        update mall_commission_record set status = #{status}
+        <where>
+            id in
+            <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </update>
+
+
+    <update id="updateCommissionRecord">
+        update mall_commission_record set status = #{status} ,date = now()
+        <where>
+           orderNumber = #{orderNumber}
+        </where>
+    </update>
+
+    <select id="getCommissionRecordByOrderNumber" resultType="com.vicmob.shoppingmall.web.distribution.entity.CommissionRecord">
+        select * from mall_commission_record
+        <where>
+            orderNumber = #{orderNumber}
+        </where>
+    </select>
+
+    <select id="getUnBookCommission" resultType="java.math.BigDecimal">
+        select sum(commission) from mall_commission_record
+        <where>
+            distributionUser = #{distributionUser} and minaId = #{minaId} and status in (0,2)
+        </where>
+    </select>
+
+</mapper>

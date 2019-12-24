@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goodsAPI.dao.MallSpecificationMapper" >
+  <resultMap id="BaseResultMap" type="com.vicmob.shoppingmall.web.goodsAPI.entity.MallSpecification" >
+    <id column="specId" property="specid" jdbcType="INTEGER" />
+    <result column="minaId" property="minaid" jdbcType="INTEGER" />
+    <result column="goodsId" property="goodsid" jdbcType="INTEGER" />
+    <result column="attributeId1" property="attributeid1" jdbcType="INTEGER" />
+    <result column="attributeIdName1" property="attributeidname1" jdbcType="VARCHAR" />
+    <result column="attributeValueName1" property="attributevaluename1" jdbcType="VARCHAR" />
+    <result column="attributeId2" property="attributeid2" jdbcType="INTEGER" />
+    <result column="attributeIdName2" property="attributeidname2" jdbcType="VARCHAR" />
+    <result column="attributeValueName2" property="attributevaluename2" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    specId, minaId, goodsId, attributeId1, attributeIdName1, attributeValueName1, attributeId2, 
+    attributeIdName2, attributeValueName2, price, stock
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallSpecificationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mall_specification
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleAndPage" resultMap="BaseResultMap" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallSpecificationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mall_specification
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallSpecificationExample" >
+    delete from mall_specification
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallSpecificationExample" resultType="java.lang.Integer" >
+    select count(*) from mall_specification
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mall_specification
+    <set >
+      <if test="record.specid != null" >
+        specId = #{record.specid,jdbcType=INTEGER},
+      </if>
+      <if test="record.minaid != null" >
+        minaId = #{record.minaid,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsid != null" >
+        goodsId = #{record.goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="record.attributeid1 != null" >
+        attributeId1 = #{record.attributeid1,jdbcType=INTEGER},
+      </if>
+      <if test="record.attributeidname1 != null" >
+        attributeIdName1 = #{record.attributeidname1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attributevaluename1 != null" >
+        attributeValueName1 = #{record.attributevaluename1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attributeid2 != null" >
+        attributeId2 = #{record.attributeid2,jdbcType=INTEGER},
+      </if>
+      <if test="record.attributeidname2 != null" >
+        attributeIdName2 = #{record.attributeidname2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attributevaluename2 != null" >
+        attributeValueName2 = #{record.attributevaluename2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.stock != null" >
+        stock = #{record.stock,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mall_specification
+    set specId = #{record.specid,jdbcType=INTEGER},
+      minaId = #{record.minaid,jdbcType=INTEGER},
+      goodsId = #{record.goodsid,jdbcType=INTEGER},
+      attributeId1 = #{record.attributeid1,jdbcType=INTEGER},
+      attributeIdName1 = #{record.attributeidname1,jdbcType=VARCHAR},
+      attributeValueName1 = #{record.attributevaluename1,jdbcType=VARCHAR},
+      attributeId2 = #{record.attributeid2,jdbcType=INTEGER},
+      attributeIdName2 = #{record.attributeidname2,jdbcType=VARCHAR},
+      attributeValueName2 = #{record.attributevaluename2,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      stock = #{record.stock,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mall_specification
+    where specId = #{specid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mall_specification
+    where specId = #{specid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallSpecification" useGeneratedKeys="true" keyProperty="specid" >
+    insert into mall_specification (minaId, goodsId, attributeId1, 
+      attributeIdName1, attributeValueName1, 
+      attributeId2, attributeIdName2, attributeValueName2, 
+      price, stock)
+    values (#{minaid,jdbcType=INTEGER}, #{goodsid,jdbcType=INTEGER}, #{attributeid1,jdbcType=INTEGER}, 
+      #{attributeidname1,jdbcType=VARCHAR}, #{attributevaluename1,jdbcType=VARCHAR}, 
+      #{attributeid2,jdbcType=INTEGER}, #{attributeidname2,jdbcType=VARCHAR}, #{attributevaluename2,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{stock,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallSpecification" useGeneratedKeys="true" keyProperty="specid" >
+    insert into mall_specification
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      minaId,
+      goodsId,
+      attributeId1,
+      attributeIdName1,
+      attributeValueName1,
+      attributeId2,
+      attributeIdName2,
+      attributeValueName2,
+      price,
+      stock,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{minaid,jdbcType=INTEGER},
+      #{goodsid,jdbcType=INTEGER},
+      #{attributeid1,jdbcType=INTEGER},
+      #{attributeidname1,jdbcType=VARCHAR},
+      #{attributevaluename1,jdbcType=VARCHAR},
+      #{attributeid2,jdbcType=INTEGER},
+      #{attributeidname2,jdbcType=VARCHAR},
+      #{attributevaluename2,jdbcType=VARCHAR},
+      #{price,jdbcType=DECIMAL},
+      #{stock,jdbcType=INTEGER},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallSpecification" >
+    update mall_specification
+    <set >
+      <if test="minaid != null" >
+        minaId = #{minaid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsid != null" >
+        goodsId = #{goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="attributeid1 != null" >
+        attributeId1 = #{attributeid1,jdbcType=INTEGER},
+      </if>
+      <if test="attributeidname1 != null" >
+        attributeIdName1 = #{attributeidname1,jdbcType=VARCHAR},
+      </if>
+      <if test="attributevaluename1 != null" >
+        attributeValueName1 = #{attributevaluename1,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeid2 != null" >
+        attributeId2 = #{attributeid2,jdbcType=INTEGER},
+      </if>
+      <if test="attributeidname2 != null" >
+        attributeIdName2 = #{attributeidname2,jdbcType=VARCHAR},
+      </if>
+      <if test="attributevaluename2 != null" >
+        attributeValueName2 = #{attributevaluename2,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+    </set>
+    where specId = #{specid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallSpecification" >
+    update mall_specification
+    set minaId = #{minaid,jdbcType=INTEGER},
+      goodsId = #{goodsid,jdbcType=INTEGER},
+      attributeId1 = #{attributeid1,jdbcType=INTEGER},
+      attributeIdName1 = #{attributeidname1,jdbcType=VARCHAR},
+      attributeValueName1 = #{attributevaluename1,jdbcType=VARCHAR},
+      attributeId2 = #{attributeid2,jdbcType=INTEGER},
+      attributeIdName2 = #{attributeidname2,jdbcType=VARCHAR},
+      attributeValueName2 = #{attributevaluename2,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      stock = #{stock,jdbcType=INTEGER}
+    where specId = #{specid,jdbcType=INTEGER}
+  </update>
+
+  <resultMap id="BaseResultMap1" type="com.vicmob.shoppingmall.web.goodsAPI.model.GoodsSpecsListVO">
+    <collection property="attributeId1VOList" ofType="com.vicmob.shoppingmall.web.goodsAPI.model.AttributeId1VO">
+      <result column="attributeId1" property="attributeid1" jdbcType="INTEGER" />
+      <result column="attributeIdName1" property="attributeidname1" jdbcType="VARCHAR" />
+      <result column="attributeValueName1" property="attributevaluename1" jdbcType="VARCHAR" />
+  </collection>
+    <collection property="attributeId2VOList" ofType="com.vicmob.shoppingmall.web.goodsAPI.model.AttributeId2VO">
+      <result column="attributeId2" property="attributeid2" jdbcType="INTEGER" />
+      <result column="attributeIdName2" property="attributeidname2" jdbcType="VARCHAR" />
+      <result column="attributeValueName2" property="attributevaluename2" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+
+  <select id="selectGoodsSpecs1" resultType="com.vicmob.shoppingmall.web.goodsAPI.model.AttributeId1VO">
+    select DISTINCT attributeId1,attributeIdName1,attributeValueName1 from mall_specification
+   where goodsId =#{goodsId,jdbcType=INTEGER} and minaId=#{minaId,jdbcType=INTEGER}
+    and (attributeId1 is not null or (attributeIdName1 is not null and attributeIdName1!="") or (attributeValueName1 is not null and attributeValueName1!=""))
+  </select>
+
+  <select id="selectGoodsSpecs2" resultType="com.vicmob.shoppingmall.web.goodsAPI.model.AttributeId2VO">
+    select DISTINCT attributeId2,attributeIdName2,attributeValueName2 from mall_specification
+    where goodsId =#{goodsId,jdbcType=INTEGER} and minaId=#{minaId,jdbcType=INTEGER}
+    and (attributeId2 is not null or (attributeIdName2 is not null and attributeIdName2!="") or (attributeValueName2 is not null and attributeValueName2!=""))
+  </select>
+
+  <select id="queryTotalStock" resultType="int">
+    select IFNULL(a.num,0) from(select (CASE WHEN (select count(1) from mall_specification where goodsId = #{goodsId,jdbcType=INTEGER}
+    and minaId=#{minaId,jdbcType=INTEGER} and deleteFlag = 0 and stock = -1)>0 THEN -1 ELSE sum(stock) END) AS num
+    from mall_specification where goodsId =#{goodsId,jdbcType=INTEGER} and minaId=#{minaId,jdbcType=INTEGER} AND deleteFlag = 0) a
+  </select>
+
+  <select id="getGoodsSpecs" resultType="com.vicmob.shoppingmall.web.goodsAPI.model.GoodsSpecsVO">
+    <choose>
+      <when test="collageFlag == 0">
+        select max(price) as highPrice,min(price) as lowPrice,
+        (CASE WHEN (select count(1) from mall_specification
+        where goodsId =#{goodsId,jdbcType=INTEGER} and minaId=#{minaId,jdbcType=INTEGER}
+        <if test="attributeValueName1 != null and attributeValueName1 !='' ">
+          and attributeValueName1=#{attributeValueName1}
+        </if>
+        <if test="attributeValueName2 != null and attributeValueName2 !='' ">
+          and attributeValueName2=#{attributeValueName2}
+        </if>
+        and deleteFlag = 0 and stock = -1)>0 THEN -1 ELSE sum(stock) END) AS totalStock
+        from mall_specification
+        where goodsId =#{goodsId,jdbcType=INTEGER} and minaId=#{minaId,jdbcType=INTEGER} and deleteFlag = 0
+        <if test="attributeValueName1 != null and attributeValueName1 !='' ">
+          and attributeValueName1=#{attributeValueName1}
+        </if>
+        <if test="attributeValueName2 != null and attributeValueName2 !='' ">
+          and attributeValueName2=#{attributeValueName2}
+        </if>
+      </when>
+      <otherwise>
+        select max(b.collageActivityPrice) as highPrice,min(b.collageActivityPrice) as lowPrice,
+        (CASE WHEN (select count(1) from mall_specification
+        where goodsId =#{goodsId} and minaId=#{minaId}
+        <if test="attributeValueName1 != null and attributeValueName1 !='' ">
+          and attributeValueName1=#{attributeValueName1}
+        </if>
+        <if test="attributeValueName2 != null and attributeValueName2 !='' ">
+          and attributeValueName2=#{attributeValueName2}
+        </if>
+        and deleteFlag = 0 and stock = -1) > 0 THEN -1 ELSE sum(a.stock) END) AS totalStock
+        from mall_specification a
+        LEFT JOIN mall_goods_collage_activity b on a.specId = b.specId
+        where a.goodsId=#{goodsId} and a.minaId=#{minaId} and a.deleteFlag = 0 and b.deleteFlag = 0
+        <if test="attributeValueName1 != null and attributeValueName1 !='' ">
+          and a.attributeValueName1=#{attributeValueName1}
+        </if>
+        <if test="attributeValueName2 != null and attributeValueName2 !='' ">
+          and a.attributeValueName2=#{attributeValueName2}
+        </if>
+      </otherwise>
+    </choose>
+  </select>
+</mapper>

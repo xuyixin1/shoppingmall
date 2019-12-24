@@ -1,0 +1,23 @@
+server:
+  port: 8082
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    context-path: /shoppingmall
+
+spring:
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+  application:
+    name: shoppingmall
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+version: 2.0

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goodsAPI.dao.PayAccountMapper">
+
+	<select id="getPayAccount" resultType="com.vicmob.shoppingmall.web.goodsAPI.model.PayAccount">
+		select  weChatPayId,minaId,appId,mchId,apiKey,certificatePath,payState from bc_pay_account
+		<where>
+			  minaId = #{minaId} and payState='1'
+		</where>
+	</select>
+
+	<select id="getPayAccountByAppId" resultType="com.vicmob.shoppingmall.web.goodsAPI.model.PayAccount">
+		select  weChatPayId,minaId,appId,mchId,apiKey,certificatePath,payState from bc_pay_account
+		<where>
+			appId = #{appId} and mchId = #{mchId} and payState='1'
+		</where>
+	</select>
+</mapper>

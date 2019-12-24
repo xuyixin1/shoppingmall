@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goods.dao.SpecificationMapper">
+
+	<sql id="select_items">
+		 specId,
+		 minaId,
+		 goodsId,
+		 attributeId1,
+		 attributeIdName1,
+		 attributeValueName1,
+		 attributeId2,
+		 attributeIdName2,
+		 attributeValueName2,
+		 price,
+		 stock
+	</sql>
+
+	<select id="getSpecificationList" resultType="com.vicmob.shoppingmall.web.goods.entity.Specification">
+		select <include refid="select_items" />  from mall_specification
+		<where>
+		       and goodsId = #{goodsId} and deleteFlag = 0
+		</where>
+	</select>
+
+	<insert id="addSpecification" useGeneratedKeys="true" keyProperty="specId" >
+		insert into mall_specification (minaId,goodsId,attributeId1,attributeIdName1,attributeValueName1,attributeId2,attributeIdName2,attributeValueName2,price,stock)
+		values (#{s.minaId},#{s.goodsId},#{s.attributeId1},#{s.attributeIdName1},#{s.attributeValueName1},#{s.attributeId2},#{s.attributeIdName2},#{s.attributeValueName2},#{s.price},#{s.stock})
+	</insert>
+
+	<select id="getSpecificationListByAttributeId" resultType="com.vicmob.shoppingmall.web.goods.entity.Specification">
+		select <include refid="select_items" />  from mall_specification
+		<where>
+			and (attributeId1 = #{attributeId} or attributeId2 = #{attributeId}) and deleteFlag = 0
+		</where>
+	</select>
+
+	<delete id="deleteSpecifications">
+        update  mall_specification set deleteFlag = 1
+        <where>
+            specId in
+            <foreach collection="specifications" item="specification" index="index" open="(" separator="," close=")">
+                #{specification.specId}
+            </foreach>
+		</where>
+	</delete>
+
+    <delete id="deleteFlagByGoodsId">
+        update  mall_specification set deleteFlag = 1
+        <where>
+            goodsId = #{goodsId}
+        </where>
+    </delete>
+
+	<update id="updateStock">
+		update mall_specification set stock = (case
+		                                  when  stock = -1 then stock
+		                                  else  stock + #{num}
+		                                  end )
+		<where>
+			specId = #{specId}
+		</where>
+	</update>
+
+    <update id="updateSpecification">
+        update mall_specification set attributeId1 = #{s.attributeId1},attributeIdName1 = #{s.attributeIdName1},attributeValueName1 = #{s.attributeValueName1},attributeId2 = #{s.attributeId2},attributeIdName2 = #{s.attributeIdName2},attributeValueName2 = #{s.attributeValueName2}
+                                   ,price = #{s.price},stock = #{s.stock}
+
+        <where>
+            specId = #{s.specId}
+        </where>
+    </update>
+</mapper>

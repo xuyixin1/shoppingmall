@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goods.dao.EvaluateMapper">
+
+	<sql id="evaluate">
+		a.evaluateId AS "evaluateId",
+		a.customerId AS "customerId",
+		a.minaId AS "minaId",
+		a.orderId AS "orderId",
+		b.orderNumber AS "orderNumber",
+		a.classifyId AS "classifyId",
+		a.secondClassifyId AS "secondClassifyId",
+		a.goodsId AS "goodsId",
+		a.specId AS "specId",
+		a.isAnonymous AS "isAnonymous",
+		a.evalLevel AS "evalLevel",
+		a.evalContent AS "evalContent",
+		a.evalPic AS "evalPic",
+		a.evalTime AS "evalTime",
+		a.storeReply AS "storeReply",
+		a.replyTime AS "replyTime",
+		a.deleteFlag AS "deleteFlag",
+		d.picUrl as "picture",
+		d.goodsName as "goodsName",
+		c.avatar as "avatar",
+		c.nickname as "nickname",
+		e.attributeValueName1 as "attributeValue1",
+		e.attributeValueName2 as "attributeValue2",
+		b.goodsDetails as "goodsDetail"
+	</sql>
+
+
+	<select id="findEvaluateList" resultType="com.vicmob.shoppingmall.web.goods.entity.Evaluate">
+		SELECT  <include refid="evaluate"/>
+		FROM mall_evaluate a
+		LEFT JOIN mall_order b ON a.orderId = b.orderId
+		LEFT JOIN bc_customer c on a.customerId = c.customerId
+		LEFT JOIN mall_goods d ON a.goodsId=d.goodsId
+		LEFT JOIN mall_specification e ON a.specId=e.specId
+		<where>
+			<if test="e.evaluateId != null">
+				AND a.evaluateId = #{e.evaluateId}
+			</if>
+			<if test="e.customerId != null">
+				AND a.customerId = #{e.customerId}
+			</if>
+			<if test="e.minaId != null">
+				AND a.minaId = #{e.minaId}
+			</if>
+			<if test="e.orderNumber != null  and e.orderNumber != ''">
+				AND b.orderNumber like CONCAT('%',#{e.orderNumber},'%')
+			</if>
+			<if test="e.classifyId != null ">
+				AND a.classifyId = #{e.classifyId}
+			</if>
+			<if test="e.secondClassifyId != null ">
+				AND a.secondClassifyId = #{e.secondClassifyId}
+			</if>
+			<if test="e.goodsId != null ">
+				AND a.goodsId = #{e.goodsId}
+			</if>
+			<if test="e.startTime != null and e.endTime != null">
+				AND a.evalTime  between #{e.startTime} and #{e.endTime}
+			</if>
+			<if test="e.goodsName != null ">
+				AND a.goodsName = #{e.goodsName}
+			</if>
+		</where>
+	</select>
+
+    <select id="getByEvaluateId" resultType="com.vicmob.shoppingmall.web.goods.entity.Evaluate">
+        SELECT  <include refid="evaluate"/>
+        FROM mall_evaluate a
+        LEFT JOIN mall_order b ON a.orderId = b.orderId
+        LEFT JOIN bc_customer c on a.customerId = c.customerId
+        LEFT JOIN mall_goods d ON a.goodsId=d.goodsId
+        LEFT JOIN mall_specification e ON a.specId=e.specId
+        <where>
+            and a.evaluateId = #{evaluateId}
+        </where>
+    </select>
+
+	<update id="updateReply">
+		update mall_evaluate set storeReply = #{storeReply}, replyTime = now()
+		<where>
+			evaluateId = #{evaluateId}
+		</where>
+	</update>
+
+	<update id="deleteEvaluate">
+		update mall_evaluate set deleteFlag = #{deleteFlag}
+		<where>
+			evaluateId = #{evaluateId}
+		</where>
+	</update>
+
+</mapper>

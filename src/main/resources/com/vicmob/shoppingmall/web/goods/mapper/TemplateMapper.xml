@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goods.dao.TemplateMapper">
+
+	<select id="findTemplateList" resultType="com.vicmob.shoppingmall.web.goods.entity.Template">
+		select templateId, minaId ,informType, informId, SendFlag from mall_template
+		<where>
+		        minaId = #{minaId}
+		</where>
+	</select>
+
+	<insert id ="addTemplate"  useGeneratedKeys="true" keyProperty="templateId">
+		insert into mall_template(minaId ,informType, informId)
+		values (#{t.minaId},#{t.informType},#{t.informId})
+	</insert>
+
+	<update id ="updateTemplate"  >
+		update mall_template set informId = #{t.informId}
+		<where>
+			minaId = #{t.minaId} and informType = #{t.informType}
+		</where>
+	</update>
+
+	<delete id="deleteTemplate" >
+         delete  from mall_template
+		<where>
+			minaId = #{t.minaId} and informType = #{t.informType}
+		</where>
+	</delete>
+
+
+	<select id="getTemplateByType" resultType="com.vicmob.shoppingmall.web.goods.entity.Template">
+		select templateId, minaId ,informType, informId, SendFlag from mall_template
+		<where>
+			minaId = #{minaId} and informType = #{informType}
+		</where>
+	</select>
+
+</mapper>

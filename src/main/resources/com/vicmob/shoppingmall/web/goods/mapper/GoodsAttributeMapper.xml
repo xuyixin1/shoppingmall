@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goods.dao.GoodsAttributeMapper">
+	<select id="getAttributeList" resultType="com.vicmob.shoppingmall.web.goods.entity.GoodsAttribute">
+		select minaId, secondClassifyId, attributeId, attributeName,attributeValues from mall_goods_attribute
+		<where>
+			 secondClassifyId = #{secondClassifyId}
+		</where>
+	</select>
+
+	<select id="getByAttributeId" resultType="com.vicmob.shoppingmall.web.goods.entity.GoodsAttribute">
+		select minaId,secondClassifyId, attributeId, attributeName,attributeValues from mall_goods_attribute
+		<where>
+			 attributeId = #{attributeId}
+		</where>
+	</select>
+
+	<select id="getGoodsAttributeByName" resultType="com.vicmob.shoppingmall.web.goods.entity.GoodsAttribute">
+		select minaId, secondClassifyId, attributeId, attributeName,attributeValues from mall_goods_attribute
+		<where>
+			  secondClassifyId = #{g.secondClassifyId} and attributeName = #{g.attributeName}
+		</where>
+	</select>
+
+	<insert id="addGoodsAttribute" useGeneratedKeys="true" keyProperty="attributeId">
+        insert into mall_goods_attribute (minaId, secondClassifyId, attributeName,attributeValues)
+        values(#{g.minaId},#{g.secondClassifyId},#{g.attributeName},#{g.attributeValues})
+	</insert>
+
+	<update id ="updateGoodsAttribute">
+		update mall_goods_attribute set  attributeName = #{g.attributeName},attributeValues = #{g.attributeValues}
+		<where>
+			attributeId = #{g.attributeId}
+		</where>
+	</update>
+
+    <delete id ="deleteGoodsAttribute">
+        delete from mall_goods_attribute
+        <where>
+            attributeId = #{attributeId}
+        </where>
+    </delete>
+
+
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.distribution.dao.WithdrawMapper">
+
+    <insert id="addWithdraw" useGeneratedKeys="true" keyProperty="w.id">
+            insert into  mall_withdraw (minaId,distributionUser,withdrawNo,userName,phone,cashApply,commissionApply,applyTime,reason,auditTime,payTime,status)
+                   values(#{w.minaId},#{w.distributionUser},#{w.withdrawNo},#{w.userName},#{w.phone},#{w.cashApply},#{w.commissionApply},#{w.applyTime},#{w.reason},#{w.auditTime},#{w.payTime},#{w.status})
+    </insert>
+
+
+    <select id="getWithdrawList" resultType="com.vicmob.shoppingmall.web.distribution.entity.Withdraw">
+            select * from mall_withdraw
+            <where>
+                minaId = #{minaId}
+                <if test="distributionUser != null  and distributionUser != ''">
+                    AND distributionUser = #{distributionUser}
+                </if>
+                <if test="withdrawNo != null  and withdrawNo != ''">
+                    AND withdrawNo like CONCAT('%',#{withdrawNo},'%')
+                </if>
+                <if test="phone != null  and phone != ''">
+                    AND phone like CONCAT('%',#{phone},'%')
+                </if>
+                <if test="status != null ">
+                    AND status = #{status}
+                </if>
+            </where>
+    </select>
+
+    <select id="getWithdrawByWithdrawNo" resultType="com.vicmob.shoppingmall.web.distribution.entity.Withdraw">
+        select * from mall_withdraw
+        <where>
+            withdrawNo = #{withdrawNo} and minaId = #{minaId}
+        </where>
+    </select>
+
+    <update id="updateAuditStatus">
+        update mall_withdraw set status = #{status}
+        <if test="auditTime != null">
+            ,auditTime = now()
+        </if>
+        <if test="reason != null and reason != ''">
+            ,reason = #{reason}
+        </if>
+        <if test="payTime != null ">
+            ,payTime = #{payTime}
+        </if>
+        <where>
+            withdrawNo = #{withdrawNo} and minaId = #{minaId}
+        </where>
+    </update>
+
+</mapper>

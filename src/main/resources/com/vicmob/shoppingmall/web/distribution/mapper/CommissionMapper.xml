@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.distribution.dao.CommissionMapper">
+
+	<select id="getCommission" resultType="com.vicmob.shoppingmall.web.distribution.entity.Commission">
+		select *  from mall_commission
+		<where>
+            commissionId = #{commissionId}
+        </where>
+	</select>
+
+    <select id="getCommissionByMinaId" resultType="com.vicmob.shoppingmall.web.distribution.entity.Commission">
+        select *  from mall_commission
+        <where>
+            minaId = #{minaId}
+        </where>
+    </select>
+
+    <select id="getCommissionByMinaIds" resultType="com.vicmob.shoppingmall.web.distribution.entity.Commission">
+        select *  from mall_commission
+        <where>
+            minaId in 
+            <foreach collection="minaIds" item="minaId" index="index" open="(" close=")" separator=",">
+                #{minaId}
+            </foreach>
+        </where>
+    </select>
+
+
+    <insert id="addCommission" useGeneratedKeys="true" keyProperty="d.commissionId">
+        insert into mall_commission (minaId,minLimit,maxLimit,numberLimit,minAmount,calculateMode,serviceCharge,freeAmount,clearingDays)
+        values (#{d.minaId},#{d.minLimit},#{d.maxLimit},#{d.numberLimit},#{d.minAmount},#{d.calculateMode},#{d.serviceCharge},#{d.freeAmount},#{d.clearingDays})
+    </insert>
+
+    <update id="updateCommission" >
+        update mall_commission set minLimit = #{d.minLimit},maxLimit = #{d.maxLimit},numberLimit = #{d.numberLimit} ,minAmount = #{d.minAmount}
+                                     ,calculateMode = #{d.calculateMode},serviceCharge = #{d.serviceCharge},freeAmount = #{d.freeAmount},clearingDays = #{d.clearingDays}
+        <where>
+            commissionId = #{d.commissionId}
+        </where>
+    </update>
+
+    <delete id="delCommission">
+       delete from  mall_commission
+       <where>
+           commissionId = #{commissionId}
+       </where>
+    </delete>
+
+</mapper>

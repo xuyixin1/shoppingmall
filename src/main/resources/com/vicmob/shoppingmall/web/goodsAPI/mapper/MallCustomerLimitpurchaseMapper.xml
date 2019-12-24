@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goodsAPI.dao.MallCustomerLimitpurchaseMapper" >
+  <resultMap id="BaseResultMap" type="com.vicmob.shoppingmall.web.goodsAPI.entity.MallCustomerLimitpurchase" >
+    <id column="limitId" property="limitid" jdbcType="INTEGER" />
+    <result column="minaId" property="minaid" jdbcType="INTEGER" />
+    <result column="collageActivityId" property="collageactivityid" jdbcType="VARCHAR" />
+    <result column="customerId" property="customerid" jdbcType="INTEGER" />
+    <result column="goodsId" property="goodsid" jdbcType="INTEGER" />
+    <result column="surplusNum" property="surplusnum" jdbcType="INTEGER" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    limitId, minaId, collageActivityId, customerId, goodsId, surplusNum, createDate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mall_customer_limitpurchase
+    where limitId = #{limitid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mall_customer_limitpurchase
+    where limitId = #{limitid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallCustomerLimitpurchase" useGeneratedKeys="true" keyProperty="limitid" >
+    insert into mall_customer_limitpurchase (minaId, collageActivityId, customerId,
+      goodsId, surplusNum, createDate
+      )
+    values (#{minaid,jdbcType=INTEGER}, #{collageactivityid,jdbcType=VARCHAR}, #{customerid,jdbcType=INTEGER},
+      #{goodsid,jdbcType=INTEGER}, #{surplusnum,jdbcType=INTEGER}, #{createdate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallCustomerLimitpurchase" useGeneratedKeys="true" keyProperty="limitid" >
+    insert into mall_customer_limitpurchase
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      minaId,
+      collageActivityId,
+      customerId,
+      goodsId,
+      surplusNum,
+      createDate,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{minaid,jdbcType=INTEGER},
+      #{collageactivityid,jdbcType=VARCHAR},
+      #{customerid,jdbcType=INTEGER},
+      #{goodsid,jdbcType=INTEGER},
+      #{surplusnum,jdbcType=INTEGER},
+      #{createdate,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallCustomerLimitpurchase" >
+    update mall_customer_limitpurchase
+    <set >
+      <if test="minaid != null" >
+        minaId = #{minaid,jdbcType=INTEGER},
+      </if>
+      <if test="collageactivityid != null" >
+        collageActivityId = #{collageactivityid,jdbcType=VARCHAR},
+      </if>
+      <if test="customerid != null" >
+        customerId = #{customerid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsid != null" >
+        goodsId = #{goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="surplusnum != null" >
+        surplusNum = #{surplusnum,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where limitId = #{limitid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallCustomerLimitpurchase" >
+    update mall_customer_limitpurchase
+    set minaId = #{minaid,jdbcType=INTEGER},
+      collageActivityId = #{collageactivityid,jdbcType=VARCHAR},
+      customerId = #{customerid,jdbcType=INTEGER},
+      goodsId = #{goodsid,jdbcType=INTEGER},
+      surplusNum = #{surplusnum,jdbcType=INTEGER},
+      createDate = #{createdate,jdbcType=TIMESTAMP}
+    where limitId = #{limitid,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectCustomerLimit" resultType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallCustomerLimitpurchase">
+    select DISTINCT a.limitId,a.minaId,a.collageActivityId,a.customerId,a.goodsId,a.surplusNum
+    from mall_customer_limitpurchase a left join
+    mall_goods_collage b on a.collageActivityId = b.collageActivityId and a.minaId = b.minaId and a.goodsId = b.goodsId
+    where b.collageNo =#{collageNo} and a.minaId = #{minaId} and a.goodsId = #{goodsId} and a.customerId = #{customerId}
+  </select>
+
+  <update id="updateSurplusNum">
+    update mall_customer_limitpurchase set surplusNum = surplusNum + #{num}
+    where minaId = #{minaId} and goodsId = #{goodsId} and collageActivityId = #{collageActivityId} and customerId = #{customerId}
+  </update>
+
+</mapper>

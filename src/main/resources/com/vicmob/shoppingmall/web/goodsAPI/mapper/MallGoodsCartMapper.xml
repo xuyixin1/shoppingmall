@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goodsAPI.dao.MallGoodsCartMapper" >
+  <resultMap id="BaseResultMap" type="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsCart" >
+    <id column="cartId" property="cartid" jdbcType="INTEGER" />
+    <result column="customerId" property="customerid" jdbcType="INTEGER" />
+    <result column="minaId" property="minaid" jdbcType="INTEGER" />
+    <result column="goodsId" property="goodsid" jdbcType="INTEGER" />
+    <result column="goodsName" property="goodsname" jdbcType="VARCHAR" />
+    <result column="picUrl" property="picurl" jdbcType="VARCHAR" />
+    <result column="specId" property="specid" jdbcType="INTEGER" />
+    <result column="goodsNum" property="goodsnum" jdbcType="INTEGER" />
+    <result column="goodsPrice" property="goodsprice" jdbcType="DECIMAL" />
+    <result column="deleteFlag" property="deleteflag" jdbcType="INTEGER" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cartId, customerId, minaId, goodsId, goodsName, picUrl, specId, goodsNum, goodsPrice,
+    deleteFlag, createDate
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsCartExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mall_goods_cart
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleAndPage" resultMap="BaseResultMap" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsCartExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mall_goods_cart
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsCartExample" >
+    delete from mall_goods_cart
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsCartExample" resultType="java.lang.Integer" >
+    select count(*) from mall_goods_cart
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mall_goods_cart
+    <set >
+      <if test="record.cartid != null" >
+        cartId = #{record.cartid,jdbcType=INTEGER},
+      </if>
+      <if test="record.customerid != null" >
+        customerId = #{record.customerid,jdbcType=INTEGER},
+      </if>
+      <if test="record.minaid != null" >
+        minaId = #{record.minaid,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsid != null" >
+        goodsId = #{record.goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsname != null" >
+        goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picurl != null" >
+        picUrl = #{record.picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specid != null" >
+        specId = #{record.specid,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsnum != null" >
+        goodsNum = #{record.goodsnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsprice != null" >
+        goodsPrice = #{record.goodsprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.deleteflag != null" >
+        deleteFlag = #{record.deleteflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdate != null" >
+        createDate = #{record.createdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mall_goods_cart
+    set cartId = #{record.cartid,jdbcType=INTEGER},
+      customerId = #{record.customerid,jdbcType=INTEGER},
+      minaId = #{record.minaid,jdbcType=INTEGER},
+      goodsId = #{record.goodsid,jdbcType=INTEGER},
+      goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      picUrl = #{record.picurl,jdbcType=VARCHAR},
+      specId = #{record.specid,jdbcType=INTEGER},
+      goodsNum = #{record.goodsnum,jdbcType=INTEGER},
+      goodsPrice = #{record.goodsprice,jdbcType=DECIMAL},
+      deleteFlag = #{record.deleteflag,jdbcType=INTEGER},
+      createDate = #{record.createdate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from mall_goods_cart
+    where cartId = #{cartid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mall_goods_cart
+    where cartId = #{cartid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsCart" useGeneratedKeys="true" keyProperty="cartid" >
+    insert into mall_goods_cart (customerId, minaId, goodsId,
+      goodsName, picUrl, specId,
+      goodsNum, goodsPrice, deleteFlag,
+      createDate)
+    values (#{customerid,jdbcType=INTEGER}, #{minaid,jdbcType=INTEGER}, #{goodsid,jdbcType=INTEGER},
+      #{goodsname,jdbcType=VARCHAR}, #{picurl,jdbcType=VARCHAR}, #{specid,jdbcType=INTEGER},
+      #{goodsnum,jdbcType=INTEGER}, #{goodsprice,jdbcType=DECIMAL}, #{deleteflag,jdbcType=INTEGER},
+      #{createdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsCart" useGeneratedKeys="true" keyProperty="cartid" >
+    insert into mall_goods_cart
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      customerId,
+      minaId,
+      goodsId,
+      goodsName,
+      picUrl,
+      specId,
+      goodsNum,
+      goodsPrice,
+      deleteFlag,
+      createDate,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{customerid,jdbcType=INTEGER},
+      #{minaid,jdbcType=INTEGER},
+      #{goodsid,jdbcType=INTEGER},
+      #{goodsname,jdbcType=VARCHAR},
+      #{picurl,jdbcType=VARCHAR},
+      #{specid,jdbcType=INTEGER},
+      #{goodsnum,jdbcType=INTEGER},
+      #{goodsprice,jdbcType=DECIMAL},
+      #{deleteflag,jdbcType=INTEGER},
+      #{createdate,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsCart" >
+    update mall_goods_cart
+    <set >
+      <if test="customerid != null" >
+        customerId = #{customerid,jdbcType=INTEGER},
+      </if>
+      <if test="minaid != null" >
+        minaId = #{minaid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsid != null" >
+        goodsId = #{goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsname != null" >
+        goodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="picurl != null" >
+        picUrl = #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="specid != null" >
+        specId = #{specid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsnum != null" >
+        goodsNum = #{goodsnum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsprice != null" >
+        goodsPrice = #{goodsprice,jdbcType=DECIMAL},
+      </if>
+      <if test="deleteflag != null" >
+        deleteFlag = #{deleteflag,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where cartId = #{cartid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsCart" >
+    update mall_goods_cart
+    set customerId = #{customerid,jdbcType=INTEGER},
+      minaId = #{minaid,jdbcType=INTEGER},
+      goodsId = #{goodsid,jdbcType=INTEGER},
+      goodsName = #{goodsname,jdbcType=VARCHAR},
+      picUrl = #{picurl,jdbcType=VARCHAR},
+      specId = #{specid,jdbcType=INTEGER},
+      goodsNum = #{goodsnum,jdbcType=INTEGER},
+      goodsPrice = #{goodsprice,jdbcType=DECIMAL},
+      deleteFlag = #{deleteflag,jdbcType=INTEGER},
+      createDate = #{createdate,jdbcType=TIMESTAMP}
+    where cartId = #{cartid,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectGoodsCartList" resultType="com.vicmob.shoppingmall.web.goodsAPI.model.MallGoodsCartVO">
+    select a.*,b.*,c.collageFlag
+    from mall_goods_cart a left join mall_specification b on a.specId = b.specId
+    left join mall_goods c on a.goodsId = c.goodsId
+    where a.minaId = #{minaId,jdbcType=INTEGER} and a.customerId = #{customerId,jdbcType=INTEGER} and a.deleteFlag = 0
+  </select>
+
+  <select id="getGoodsCartNumByGoodsId" resultType="int">
+    select ifnull(sum(goodsNum),0) from mall_goods_cart
+    where minaId = #{minaId,jdbcType=INTEGER} and goodsId = #{goodsId,jdbcType=INTEGER}
+    and customerId = #{customerId,jdbcType=INTEGER}
+    and deleteFlag = 0
+  </select>
+</mapper>

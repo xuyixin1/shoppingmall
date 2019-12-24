@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goodsAPI.dao.WXMapper">
+
+	<select id="getOpenId" resultType="com.vicmob.shoppingmall.web.goodsAPI.model.Customer">
+		select  customerId,minaId,openId from bc_customer
+		<where>
+			  minaId = #{minaId} and customerId = #{customerId}
+		</where>
+	</select>
+
+	<select id="getMinaAuthorization" resultType="com.vicmob.shoppingmall.web.goodsAPI.model.MinaAuthorization">
+		select  minaId, appId, appSecret, accessToken, accessTokenEndTime from bc_mina_authorization
+		<where>
+			minaId = #{minaId} and authorizerState = 1
+		</where>
+	</select>
+
+	<update id="updateAcessToken">
+		update  bc_mina_authorization set  accessToken = #{accessToken},accessTokenEndTime = #{endTime}
+		<where>
+			minaId = #{minaId}
+		</where>
+	</update>
+
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goods.dao.GoodsClassifyMapper">
+	<select id="getGoodsClassifyList" resultType="com.vicmob.shoppingmall.web.goods.entity.GoodsClassify">
+		select minaId, classifyId, classifyName,sort from mall_goods_classify
+		<where>
+			<if test="g.classifyName != null and g.classifyName != ''">
+				and classifyName like CONCAT('%',#{g.classifyName},'%')
+			</if>
+			and minaId = #{minaId}
+		</where>
+	</select>
+
+	<select id="getByClassifyId" resultType="com.vicmob.shoppingmall.web.goods.entity.GoodsClassify">
+		select minaId, classifyId, classifyName,sort,(select count(0) from mall_goods_second_classify where classifyId = #{classifyId}) secondClassifyCount,(select count(0) from mall_goods where classifyId = #{classifyId} and deleteFlag = 0 ) goodsCount  from mall_goods_classify
+		<where>
+			classifyId = #{classifyId}
+		</where>
+	</select>
+
+
+	<select id="getByClassifyName" resultType="com.vicmob.shoppingmall.web.goods.entity.GoodsClassify">
+		select minaId, classifyId, classifyName,sort from mall_goods_classify
+		<where>
+			minaId = #{minaId} and classifyName = #{classifyName}
+		</where>
+	</select>
+
+	<insert id="addGoodsClassify" useGeneratedKeys="true" keyProperty="classifyId">
+        insert into mall_goods_classify (minaId,classifyName,sort)
+        values(#{g.minaId},#{g.classifyName},#{g.sort})
+	</insert>
+
+
+	<update id="updateGoodsClassify" >
+        update mall_goods_classify set classifyName = #{g.classifyName},sort = #{g.sort}
+       <where>
+		   classifyId = #{g.classifyId} and minaId = #{g.minaId}
+	   </where>
+	</update>
+
+	<delete id="deleteGoodsClassify" >
+		delete from mall_goods_classify
+		<where>
+			classifyId = #{classifyId}
+		</where>
+	</delete>
+
+</mapper>

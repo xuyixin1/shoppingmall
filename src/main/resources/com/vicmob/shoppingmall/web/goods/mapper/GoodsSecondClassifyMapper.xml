@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goods.dao.GoodsSecondClassifyMapper">
+	<select id="getGoodsSecondClassifyList" resultType="com.vicmob.shoppingmall.web.goods.entity.GoodsSecondClassify">
+		select minaId, classifyId,secondClassifyId,secondClassifyName,classifyPictureUrl,sort from mall_goods_second_classify
+		<where>
+			<if test="g.secondClassifyName != null and g.secondClassifyName != ''">
+				and secondClassifyName like CONCAT('%',#{g.secondClassifyName},'%')
+			</if>
+			and classifyId = #{g.classifyId}
+		</where>
+	</select>
+
+	<select id="getBySecondClassifyId" resultType="com.vicmob.shoppingmall.web.goods.entity.GoodsSecondClassify">
+		select minaId, classifyId,secondClassifyId,secondClassifyName,classifyPictureUrl,sort,(select count(0) from mall_goods where secondClassifyId = #{secondClassifyId} and deleteFlag = 0 ) goodsCount from mall_goods_second_classify
+		<where>
+			 secondClassifyId = #{secondClassifyId}
+		</where>
+	</select>
+
+	<select id="getBySecondClassifyName" resultType="com.vicmob.shoppingmall.web.goods.entity.GoodsSecondClassify">
+		select minaId, classifyId,secondClassifyId,secondClassifyName,classifyPictureUrl,sort from mall_goods_second_classify
+		<where>
+			secondClassifyName = #{secondClassifyName} and classifyId = #{classifyId}
+		</where>
+	</select>
+
+
+	<insert id="addGoodsSecondClassify" useGeneratedKeys="true" keyProperty="secondClassifyId">
+        insert into mall_goods_second_classify (minaId, classifyId, secondClassifyName, classifyPictureUrl,sort)
+        values(#{g.minaId},#{g.classifyId},#{g.secondClassifyName},#{g.classifyPictureUrl},#{g.sort})
+	</insert>
+
+	<select id="getByClassifyId" resultType="com.vicmob.shoppingmall.web.goods.entity.GoodsClassify">
+		select minaId, classifyId,secondClassifyId,secondClassifyName,classifyPictureUrl,sort from mall_goods_second_classify
+		<where>
+			classifyId = #{classifyId}
+		</where>
+	</select>
+
+	<update id="updateGoodsSecondClassify">
+		update mall_goods_second_classify set secondClassifyName = #{g.secondClassifyName},classifyPictureUrl = #{g.classifyPictureUrl}, sort = #{g.sort}
+		<where>
+			secondClassifyId = #{g.secondClassifyId}
+		</where>
+	</update>
+
+	<delete id="deleteGoodsSecondClassify" >
+		delete from  mall_goods_second_classify
+		<where>
+			secondClassifyId = #{secondClassifyId}
+		</where>
+	</delete>
+
+
+
+</mapper>

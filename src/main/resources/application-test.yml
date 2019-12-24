@@ -1,0 +1,55 @@
+web:
+  upload-path:
+    /data/webapps/vicmob/shoppingmall/
+
+spring:
+  datasource:
+    host: 172.81.236.123
+    port: 3306
+    database: vicmob_newmina
+    url: jdbc:mysql://${spring.datasource.host}:${spring.datasource.port}/${spring.datasource.database}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    username: admin
+    password: bNe0fOQid5J2qxeaM5
+    DriverClassName: com.mysql.cj.jdbc.Driver
+  resources:
+     static-locations: file:${web.upload-path},classpath:/static/
+  redis:
+    host: 127.0.0.1
+    port: 6679
+    password: wxk888888
+  session:
+    store-type: none
+
+
+
+
+logging:
+  config: classpath:logback.xml
+    #mybatis打印sql
+
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:com/vicmob/shoppingmall/web/**/mapper/*.xml
+
+
+wx:
+  token:
+    url: https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential
+  weapp:
+    page: pages/myOrder/myOrder
+    sendMessage:
+      url: https://api.weixin.qq.com/cgi-bin/message/wxopen/template/uniform_send
+  pay:
+    notifyUrl: https://java.wx-vicmob.com/shoppingmall/minaAPI/onlineShop/pay/payNotify
+    body: shoppingmall_goods
+    useSandBox: false
+    checkName: NO_CHECK
+    desc: Application for cash
+  business:
+    webToken:
+      url: https://api.weixin.qq.com/sns/oauth2/access_token
+    sendMessage:
+      url: https://api.weixin.qq.com/cgi-bin/message/template/send
+
+qrcode:
+    url: https://java.wx-vicmob.com/VicmobBusinessCard/web/BcProduct/getQrCodeforShop

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <typeHandlers>
+        <typeHandler handler="com.vicmob.shoppingmall.global.EnumValueTypeHandler" javaType="com.vicmob.shoppingmall.constant.Constant$SaleFlag"/>
+        <typeHandler handler="com.vicmob.shoppingmall.global.EnumValueTypeHandler" javaType="com.vicmob.shoppingmall.constant.Constant$SendFlag"/>
+        <typeHandler handler="com.vicmob.shoppingmall.global.EnumValueTypeHandler" javaType="com.vicmob.shoppingmall.constant.Constant$DeleteFlag"/>
+        <typeHandler handler="com.vicmob.shoppingmall.global.EnumValueTypeHandler" javaType="com.vicmob.shoppingmall.constant.Constant$InformType"/>
+        <typeHandler handler="com.vicmob.shoppingmall.global.EnumValueTypeHandler" javaType="com.vicmob.shoppingmall.constant.Constant$OrderType"/>
+        <typeHandler handler="com.vicmob.shoppingmall.global.EnumValueTypeHandler" javaType="com.vicmob.shoppingmall.constant.Constant$PayType"/>
+        <typeHandler handler="com.vicmob.shoppingmall.global.EnumValueTypeHandler" javaType="com.vicmob.shoppingmall.constant.Constant$EvaluateFlag"/>
+        <typeHandler handler="com.vicmob.shoppingmall.global.EnumValueTypeHandler" javaType="com.vicmob.shoppingmall.constant.Constant$DeleteFlag1"/>
+        <typeHandler handler="com.vicmob.shoppingmall.global.EnumValueTypeHandler" javaType="com.vicmob.shoppingmall.constant.Constant$Flag"/>
+        <typeHandler handler="com.vicmob.shoppingmall.global.EnumValueTypeHandler" javaType="com.vicmob.shoppingmall.constant.CommissionConstant$CalculateMode"/>
+        <typeHandler handler="com.vicmob.shoppingmall.global.EnumValueTypeHandler" javaType="com.vicmob.shoppingmall.constant.CommissionConstant$CommissionStatus"/>
+        <typeHandler handler="com.vicmob.shoppingmall.global.EnumValueTypeHandler" javaType="com.vicmob.shoppingmall.constant.CommissionConstant$CommissionMode"/>
+        <typeHandler handler="com.vicmob.shoppingmall.global.EnumValueTypeHandler" javaType="com.vicmob.shoppingmall.constant.CommissionConstant$WithdrawStatus"/>
+
+
+    </typeHandlers>
+
+    <plugins>
+	    <plugin interceptor="com.github.pagehelper.PageInterceptor">
+	    </plugin>
+	</plugins>
+</configuration>

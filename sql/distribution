@@ -1,0 +1,133 @@
+DROP TABLE IF EXISTS `mall_commission`;
+CREATE TABLE `mall_commission` (
+  `commissionId` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `minaId` int(11) NOT NULL COMMENT '小程序ID',
+  `minLimit` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '最低提现金额(0.01-999.99)',
+  `maxLimit` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '最高提现金额(0.01-999.99)',
+  `numberLimit` int(11) NOT NULL DEFAULT '0' COMMENT '每天提现次数',
+  `minAmount` decimal(10,2) NOT NULL DEFAULT '0.01' COMMENT '分销最低佣金',
+  `calculateMode` tinyint(4) NOT NULL DEFAULT '0' COMMENT '佣金计算方式（0：商品总价；1：实际支付金额）',
+  `serviceCharge` decimal(10,2) DEFAULT '0.00' COMMENT '佣金提现手续费',
+  `freeAmount` decimal(10,2) DEFAULT '0.00' COMMENT '免手续费提现佣金金额',
+  `clearingDays` int(11) DEFAULT '0' COMMENT '结算天数(0-60)',
+  PRIMARY KEY (`commissionId`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='佣金设置';
+
+
+
+DROP TABLE IF EXISTS `mall_commission_record`;
+CREATE TABLE `mall_commission_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `minaId` int(11) NOT NULL COMMENT '小程序ID',
+  `orderNumber` varchar(50) NOT NULL COMMENT '订单编号',
+  `goodsId`  int(11) NOT NULL COMMENT '商品id',
+  `goodsName` varchar(255) NOT NULL COMMENT '商品名称',
+  `picUrl` varchar(255) NOT NULL COMMENT '图片url',
+  `commissionMode` int(4) NOT NULL DEFAULT '0' COMMENT '佣金模式（0 固定金额；1：百分比）',
+  `fixedCommission` decimal(10,2)  COMMENT '固定佣金金额',
+  `percentageCommission` decimal(10,2)  COMMENT '百分比佣金金额',
+  `totalMoney` decimal(10,2) NOT NULL COMMENT '商品总价',
+  `payMoney` decimal(10,2) NOT NULL COMMENT '实付金额',
+  `commission` decimal(10,2) NOT NULL COMMENT '佣金',
+  `status` int(4) NOT NULL DEFAULT '0' COMMENT '佣金状态（0 已支付 1：已失效2：未入账3：已入账）',
+  `distributionUser`  varchar(200) NOT NULL COMMENT '分销的用户openId',
+  `openId` varchar(200) NOT NULL COMMENT '订单拥有者openId',
+  `date`  datetime COMMENT '订单结束时间',
+  `payDate`  datetime NOT NULL COMMENT '订单支付时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='佣金记录表';
+
+
+DROP TABLE IF EXISTS `mall_distribution`;
+CREATE TABLE `mall_distribution` (
+  `distributionId` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `minaId` int(11) NOT NULL COMMENT '小程序ID',
+  `goodsId` int(11) NOT NULL COMMENT '商品id',
+  `commissionMode` int(4) NOT NULL DEFAULT '0' COMMENT '佣金模式（0 固定金额；1：百分比）',
+  `fixedCommission` decimal(10,2)  COMMENT '固定佣金金额',
+  `percentageCommission` decimal(10,2) COMMENT '百分比佣金金额',
+  PRIMARY KEY (`distributionId`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='分销表';
+
+
+alter table mall_goods add distributionFlag int(4) NOT NULL DEFAULT '0' COMMENT '（0:不参与分销；1：参与分销）';
+alter table mall_order add distributionUser int(11)  COMMENT '（分销的用户fansId）';
+
+alter table mall_goods add collageFlag int(4) NOT NULL DEFAULT '0' COMMENT '是否是拼团商品(0:不是;1:是)';
+alter table mall_order add collageNo varchar(50)  COMMENT '拼团单号';
+
+
+
+alter table bc_customer add totalCommission decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '总计佣金（注：==可提现佣金+已提现的+申请中)';
+alter table bc_customer add canWithdraw decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '可提现佣金';
+alter table bc_customer add withdrawed decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '已提现的';
+alter table bc_customer add apply decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '申请中';
+alter table bc_customer add applyNumber int(4) NOT NULL DEFAULT '0' COMMENT '申请提现次数';
+
+DROP TABLE IF EXISTS `mall_withdraw`;
+CREATE TABLE `mall_withdraw` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `minaId` int(11) NOT NULL COMMENT '小程序ID',
+  `distributionUser` varchar(50) NOT NULL COMMENT '分销者微信openId',
+  `withdrawNo` varchar(50)  NOT NULL COMMENT '提现单号',
+  `userName` varchar(20) NOT NULL COMMENT '姓名',
+  `phone` varchar(15)  NOT NULL COMMENT '手机号',
+  `cashApply` decimal(10,2) NOT NULL COMMENT '提现申请金额',
+  `commissionApply` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '佣金提现手续费（满足免手续费条件插入0.00）',
+  `applyTime` datetime NOT NULL COMMENT '申请时间',
+  `reason` varchar(300)  DEFAULT NULL COMMENT '审核未通过理由',
+  `auditTime` datetime DEFAULT NULL COMMENT '审核时间（通过或驳回）',
+  `payTime` datetime DEFAULT NULL COMMENT '打款时间',
+  `status` int(4) NOT NULL DEFAULT '0' COMMENT '状态（0：待审核；1：待打款；2：已打款；3：未通过）',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='提现明细表';
+
+
+
+DROP TABLE IF EXISTS `mall_customer_limitpurchase`;
+CREATE TABLE `mall_customer_limitpurchase` (
+  `limitId` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品限购id',
+  `minaId` int(11) NOT NULL COMMENT '平台id',
+  `collageActivityId` varchar(20) NOT NULL COMMENT '拼团活动id',
+  `customerId` int(10) NOT NULL COMMENT '顾客id',
+  `goodsId` int(11) NOT NULL COMMENT '商品id',
+  `surplusNum` int(11) NOT NULL COMMENT '剩余限购数量',
+  `createDate` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`limitId`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+
+
+DROP TABLE IF EXISTS `mall_goods_collage`;
+CREATE TABLE `mall_goods_collage` (
+  `collageId` int(11) NOT NULL AUTO_INCREMENT COMMENT '拼团id',
+  `collageActivityId` varchar(20) NOT NULL COMMENT '拼团活动id',
+  `minaId` int(11) NOT NULL COMMENT '平台id',
+  `customerId` int(11) NOT NULL COMMENT '拼团发起人id',
+  `collageStartDate` datetime NOT NULL COMMENT '发起拼团的时间',
+  `goodsId` int(11) NOT NULL COMMENT '商品id',
+  `collageNo` varchar(20) NOT NULL COMMENT '团单号(唯一的不重复)',
+  `goodsName` varchar(255) NOT NULL COMMENT '商品名称',
+  `alCollagePeople` int(11) NOT NULL COMMENT '已拼团人数',
+  `collageStatus` int(1) NOT NULL COMMENT '拼团状态(0:待成团;1:拼团中:2:拼团成功;3:拼团失败)',
+  PRIMARY KEY (`collageId`)
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8mb4;
+
+
+DROP TABLE IF EXISTS `mall_goods_collage_activity`;
+CREATE TABLE `mall_goods_collage_activity` (
+  `collageActivityId` varchar(20) NOT NULL COMMENT '拼团活动id',
+  `minaId` int(11) NOT NULL COMMENT '平台id',
+  `goodsId` int(11) NOT NULL COMMENT '商品id',
+  `specId` int(11) NOT NULL COMMENT '商品规格id',
+  `collageActivityName` varchar(100) NOT NULL COMMENT '拼团活动名称',
+  `collageActivityPeople` int(11) NOT NULL DEFAULT '0' COMMENT '成团人数',
+  `activityStartDate` datetime NOT NULL COMMENT '拼团活动开始时间',
+  `activityEndDate` datetime NOT NULL COMMENT '拼团活动结束时间',
+  `collageValidDate` int(11) NOT NULL COMMENT '成团有效时间',
+  `partsNumber` int(11) DEFAULT '0' COMMENT '以拼件数',
+  `limitedPurchase` int(11) NOT NULL COMMENT '每人限购数',
+  `collageActivityPrice` decimal(10,2) NOT NULL COMMENT '拼团价格',
+  `collageActivityStatus` int(1) NOT NULL COMMENT '拼团活动状态(0:活动未开始;1:活动中;2:已结束;3:已失效)',
+  `deleteFlag` int(11) NOT NULL COMMENT '删除标志(0:不删除,1:删除)',
+  `createDate` datetime NOT NULL COMMENT '拼团活动创建时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

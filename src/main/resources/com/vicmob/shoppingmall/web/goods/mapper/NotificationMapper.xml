@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goods.dao.NotificationMapper">
+
+
+	<select id="getNotificationList" resultType="com.vicmob.shoppingmall.web.goods.entity.Notification">
+		select  notificationId,minaId,openId,sendFlag from mall_notification
+		<where>
+			minaId = #{minaId} and sendFlag = 1
+		</where>
+	</select>
+
+
+	<insert id="addNotification" useGeneratedKeys="true" keyProperty="notificationId">
+		insert into mall_notification (minaId,openId)
+		values(#{n.minaId},#{n.openId})
+	</insert>
+
+    <delete id="deleteNotification" >
+		delete from mall_notification
+        <where>
+            minaId = #{minaId} and sendFlag = 1
+        </where>
+	</delete>
+
+
+    <update id="updateNotification" >
+        update mall_notification set openId = #{n.openId}, name = #{n.name}
+        <where>
+            notificationId = #{n.notificationId}
+        </where>
+    </update>
+
+
+</mapper>

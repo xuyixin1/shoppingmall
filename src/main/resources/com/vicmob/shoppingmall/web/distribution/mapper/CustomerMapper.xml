@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.distribution.dao.CustomerMapper">
+
+	<select id="getCustomerListByOpenId" resultType="com.vicmob.shoppingmall.web.distribution.entity.Customer">
+		select *  from bc_customer
+        <where>
+            openId in
+            <foreach collection="openIds" item="openId" index="index" open="(" close=")" separator=",">
+                #{openId}
+            </foreach>
+        </where>
+	</select>
+
+    <update id="updateCommission">
+        update bc_customer set
+        <trim  prefix=" totalCommission = case" suffix = " end,">
+            <foreach collection="customers" item="customer" index="index">
+                when customerId = #{customer.customerId} then #{customer.totalCommission}
+            </foreach>
+        </trim>
+
+        <trim  prefix=" canWithdraw = case" suffix = " end">
+            <foreach collection="customers" item="customer" index="index">
+                when customerId = #{customer.customerId} then #{customer.canWithdraw}
+            </foreach>
+        </trim>
+        <where>
+            customerId in
+            <foreach collection="customers" item="customer" index="index" open="(" separator="," close=")">
+                #{customer.customerId}
+            </foreach>
+        </where>
+
+    </update>
+
+    <select id="getCustomerList" resultType="com.vicmob.shoppingmall.web.distribution.entity.Customer">
+        select *  from bc_customer
+        <where>
+           minaId = #{minaId}
+           <if test="nickName != null  and nickName != ''">
+                AND nickName like CONCAT('%',#{nickName},'%')
+           </if>
+           and totalCommission > 0
+        </where>
+    </select>
+
+    <update id="updateCommissionTotalCommission">
+        update bc_customer set totalCommission =  totalCommission + #{commission},canWithdraw = canWithdraw + #{commission}
+        <where>
+            openId = #{openId}
+        </where>
+    </update>
+
+
+    <select id="getCustomerByCustomerId" resultType="com.vicmob.shoppingmall.web.distribution.entity.Customer">
+        select *  from bc_customer
+        <where>
+           minaId = #{minaId} and customerId = #{customerId}
+        </where>
+    </select>
+
+    <select id="getCustomerByOpenId" resultType="com.vicmob.shoppingmall.web.distribution.entity.Customer">
+        select *  from bc_customer
+        <where>
+            minaId = #{minaId} and openId = #{openId}
+        </where>
+    </select>
+
+    <update id="updateApplyNumberAndCash">
+        update bc_customer set applyNumber = applyNumber + 1 ,canWithdraw = canWithdraw - #{cashApply}, apply = apply + #{cashApply}
+        <where>
+            openId = #{openId} and minaId = #{minaId}
+        </where>
+    </update>
+
+    <update id="updateCommissionWithUnpassed">
+        update bc_customer set canWithdraw = canWithdraw + #{cashApply},apply = apply - #{cashApply}
+        <where>
+            openId = #{openId} and minaId = #{minaId}
+        </where>
+    </update>
+
+    <update id="updateCommissionWithPayed">
+        update bc_customer set withdrawed = withdrawed + #{cashApply},apply = apply - #{cashApply}
+        <where>
+            openId = #{openId} and minaId = #{minaId}
+        </where>
+    </update>
+
+    <update id="clearCustomerApplyNumber">
+        update bc_customer set applyNumber = 0
+    </update>
+
+
+</mapper>

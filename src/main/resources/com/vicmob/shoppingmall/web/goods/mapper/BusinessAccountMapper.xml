@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goods.dao.BusinessAccountMapper">
+
+	<select id="getBusinessAccount" resultType="com.vicmob.shoppingmall.web.goods.entity.BusinessAccount">
+		select accountId, name,token, appId, appSecret, accessToken, accessTokenEndTime, original, wxQrcodeUrl from mall_business_account
+		limit 0,1
+	</select>
+
+    <update id="updateAcessToken">
+        update  mall_business_account set  accessToken = #{accessToken},accessTokenEndTime = #{endTime}
+    </update>
+
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goodsAPI.dao.FormMapper">
+
+	<select id="getFormByCustomerId" resultType="com.vicmob.shoppingmall.web.goodsAPI.model.Form">
+		select  minaFormId,formId,customerId,endDate from bc_mina_form
+		<where>
+			customerId = #{customerId} and endDate > NOW()
+		</where>
+		ORDER BY minaFormId ASC
+		limit 0,1
+	</select>
+
+	<delete id="deleteFormById">
+		delete from bc_mina_form
+		<where>
+			minaFormId = #{minaFormId}
+		</where>
+	</delete>
+</mapper>

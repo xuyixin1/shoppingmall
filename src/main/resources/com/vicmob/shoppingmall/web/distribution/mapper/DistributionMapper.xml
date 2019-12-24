@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.distribution.dao.DistributionMapper">
+
+	<select id="getDistribution" resultType="com.vicmob.shoppingmall.web.distribution.entity.Distribution">
+		select *  from mall_distribution
+		<where>
+            goodsId = #{goodsId}
+        </where>
+	</select>
+
+    <insert id="addDistribution" useGeneratedKeys="true" keyProperty="d.distributionId">
+        insert into mall_distribution (minaId,goodsId,commissionMode,fixedCommission,percentageCommission)
+        values (#{d.minaId},#{d.goodsId},#{d.commissionMode},#{d.fixedCommission},#{d.percentageCommission})
+    </insert>
+
+    <update id="updateDistribution">
+        update  mall_distribution  set commissionMode = #{d.commissionMode}, fixedCommission =#{d.fixedCommission}, percentageCommission = #{d.percentageCommission}
+        <where>
+            distributionId = #{d.distributionId}
+        </where>
+    </update>
+
+</mapper>

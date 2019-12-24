@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goods.dao.SlideMapper">
+
+
+	<select id="getSlideList" resultType="com.vicmob.shoppingmall.web.goods.entity.Slide">
+		select  slideId,minaId,slideName,picUrl,useFlag,classifyId,secondClassifyId,goodsId from mall_slide
+		<where>
+			minaId = #{minaId}
+		</where>
+	</select>
+
+	<select id="getByslideId" resultType="com.vicmob.shoppingmall.web.goods.entity.Slide">
+		select  slideId,minaId,slideName,picUrl,useFlag,classifyId,secondClassifyId,goodsId from mall_slide
+		<where>
+			slideId = #{slideId}
+		</where>
+	</select>
+
+	<insert id="addSlide" useGeneratedKeys="true" keyProperty="slideId" >
+        insert into mall_slide(minaId,slideName,picUrl,useFlag,classifyId,secondClassifyId,goodsId)
+	    values (#{s.minaId},#{s.slideName},#{s.picUrl},#{s.useFlag},#{s.classifyId},#{s.secondClassifyId},#{s.goodsId})
+	</insert>
+
+	<update id="updateSlide" >
+        update mall_slide set slideName = #{s.slideName} ,picUrl = #{s.picUrl} ,useFlag = #{s.useFlag},classifyId = #{s.classifyId},secondClassifyId = #{s.secondClassifyId},goodsId = #{s.goodsId}
+        <where>
+			slideId = #{s.slideId} and minaId = #{s.minaId}
+		</where>
+	</update>
+
+    <update id="updateUseFlag" >
+        update mall_slide set useFlag = #{useFlag}
+        <where>
+            slideId = #{slideId}
+        </where>
+    </update>
+
+	<delete id="deteleSlide">
+		delete from mall_slide
+		<where>
+			slideId = #{slideId}
+		</where>
+	</delete>
+
+</mapper>

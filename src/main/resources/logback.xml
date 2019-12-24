@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="PROJECT" value="shoppingmall" />
+    <property name="ROOT" value="/data/logs/springboot/shoppingmall/logs/" />
+    <property name="FILESIZE" value="50MB" />
+    <property name="MAXHISTORY" value="30" />
+    <!-- 控制台打印日志的相关配置 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 日志格式 -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%level] - %m%n</pattern>
+        </encoder>
+        <!-- 日志级别过滤器 -->
+      <!--  <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            &lt;!&ndash; 过滤的级别 &ndash;&gt;
+            <level>ERROR</level>
+            &lt;!&ndash; 匹配时的操作：接收（记录） &ndash;&gt;
+            <onMatch>ACCEPT</onMatch>
+            &lt;!&ndash; 不匹配时的操作：拒绝（不记录） &ndash;&gt;
+            <onMismatch>DENY</onMismatch>
+        </filter>-->
+    </appender>
+
+    <!-- 文件保存日志的相关配置 -->
+    <appender name="INFO-OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志格式 -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%class:%line] - %m%n</pattern>
+        </encoder>
+        <!-- 日志级别过滤器 -->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">
+            &lt;!&ndash; 过滤的级别 &ndash;&gt;
+            <level>INFO</level>
+            &lt;!&ndash; 匹配时的操作：接收（记录） &ndash;&gt;
+            <onMatch>ACCEPT</onMatch>
+            &lt;!&ndash; 不匹配时的操作：拒绝（不记录） &ndash;&gt;
+            <onMismatch>DENY</onMismatch>
+        </filter>-->
+        <!-- 循环政策：基于时间创建日志文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日志文件名格式 -->
+            <!--<fileNamePattern>${ROOT}%d/info.%i.log</fileNamePattern>-->
+            <fileNamePattern>${ROOT}%d/info.log</fileNamePattern>
+            <!-- 最大保存时间：30天-->
+            <maxHistory>${MAXHISTORY}</maxHistory>
+            当日志文件超过maxFileSize指定的大小是，根据上面提到的%i进行日志文件滚动 注意此处配置SizeBasedTriggeringPolicy是无法实现按文件大小进行滚动的，必须配置timeBasedFileNamingAndTriggeringPolicy
+            -->
+            <!--<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${FILESIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>-->
+        </rollingPolicy>
+    </appender>
+
+  <!--  <appender name="ERROR-OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        &lt;!&ndash; 日志格式 &ndash;&gt;
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%class:%line] - %m%n</pattern>
+        </encoder>
+        &lt;!&ndash; 日志级别过滤器 &ndash;&gt;
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            &lt;!&ndash; 过滤的级别 &ndash;&gt;
+            <level>ERROR</level>
+            &lt;!&ndash; 匹配时的操作：接收（记录） &ndash;&gt;
+            <onMatch>ACCEPT</onMatch>
+            &lt;!&ndash; 不匹配时的操作：拒绝（不记录） &ndash;&gt;
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        &lt;!&ndash; 循环政策：基于时间创建日志文件 &ndash;&gt;
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            &lt;!&ndash; 日志文件名格式 &ndash;&gt;
+            &lt;!&ndash;<fileNamePattern>${ROOT}%d/error.%i.log</fileNamePattern>&ndash;&gt;
+            <fileNamePattern>${ROOT}%d/error.log</fileNamePattern>
+            &lt;!&ndash; 最大保存时间：30天&ndash;&gt;
+            <maxHistory>${MAXHISTORY}</maxHistory>
+            当日志文件超过maxFileSize指定的大小是，根据上面提到的%i进行日志文件滚动 注意此处配置SizeBasedTriggeringPolicy是无法实现按文件大小进行滚动的，必须配置timeBasedFileNamingAndTriggeringPolicy
+            &ndash;&gt;
+           &lt;!&ndash; <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${FILESIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>&ndash;&gt;
+        </rollingPolicy>
+    </appender>-->
+
+    <!-- 基于dubug处理日志：具体控制台或者文件对日志级别的处理还要看所在appender配置的filter，如果没有配置filter，则使用root配置 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+       <!-- <appender-ref ref="ERROR-OUT" />-->
+        <appender-ref ref="INFO-OUT" />
+    </root>
+</configuration>

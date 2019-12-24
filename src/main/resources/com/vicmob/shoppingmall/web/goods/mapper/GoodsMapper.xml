@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goods.dao.GoodsMapper">
+
+	<sql id="select_items">
+		goodsId,minaId,classifyId,secondClassifyId,showPrice,goodsName,picUrl,detailPicUrl,sailed,label,saleFlag,sort,description,deleteFlag,parameters,showFlag,distributionFlag,collageSailed,collageFlag
+	</sql>
+
+	<select id="getGoodList" resultType="com.vicmob.shoppingmall.web.goods.entity.Goods">
+		select  <include refid="select_items" /> from mall_goods
+		<where>
+			<if test="g.classifyId != null ">
+				and classifyId = #{g.classifyId}
+			</if>
+			<if test="g.secondClassifyId != null ">
+				and secondClassifyId = #{g.secondClassifyId}
+			</if>
+			<if test="g.goodsName != null and g.goodsName !=''">
+				and goodsName like CONCAT('%',#{g.goodsName},'%')
+			</if>
+			<if test="g.saleFlag != null ">
+				and saleFlag = #{g.saleFlag}
+			</if>
+            <if test="g.distributionFlag != null ">
+                and distributionFlag = #{g.distributionFlag}
+            </if>
+			and deleteFlag = #{g.deleteFlag} and minaId = #{minaId}
+		</where>
+	</select>
+
+	<select id="getByGoodsId" resultType="com.vicmob.shoppingmall.web.goods.entity.Goods">
+		select  <include refid="select_items" /> from mall_goods
+		<where>
+			 goodsId = #{goodsId} and  deleteFlag = 0
+		</where>
+	</select>
+
+	<update id="deleteByGoodsId" >
+		update  mall_goods set deleteFlag = 1
+		<where>
+			goodsId = #{goodsId}
+		</where>
+	</update>
+
+	<update id="updateSaleFlag" >
+		update mall_goods set saleFlag = #{saleFlag}
+		<where>
+			goodsId = #{goodsId}
+		</where>
+	</update>
+
+
+	<insert id="addGoods" useGeneratedKeys="true" keyProperty="g.goodsId">
+		 insert into mall_goods (minaId,classifyId,secondClassifyId,goodsName,picUrl,detailPicUrl,sailed,label,saleFlag,sort,description,parameters,showPrice,showFlag,distributionFlag)
+         values(#{g.minaId},#{g.classifyId},#{g.secondClassifyId},#{g.goodsName},#{g.picUrl},#{g.detailPicUrl},#{g.sailed},#{g.label},#{g.saleFlag},#{g.sort},#{g.description},#{g.parameters},#{g.showPrice},#{g.showFlag},#{g.distributionFlag})
+
+	</insert>
+
+
+	<select id="getByGoodsName" resultType="com.vicmob.shoppingmall.web.goods.entity.Goods">
+		select  <include refid="select_items" /> from mall_goods
+		<where>
+			minaId = #{minaId} and  goodsName = #{goodsName} and deleteFlag = 0
+		</where>
+	</select>
+
+
+	<update id="updateGoods" >
+        update mall_goods set classifyId = #{g.classifyId},secondClassifyId = #{g.secondClassifyId},goodsName = #{g.goodsName},picUrl = #{g.picUrl},
+                         detailPicUrl = #{g.detailPicUrl},sailed = #{g.sailed},label = #{g.label},saleFlag = #{g.saleFlag},sort = #{g.sort},
+                         description = #{g.description},parameters = #{g.parameters},showPrice = #{g.showPrice},showFlag = #{g.showFlag},
+                         distributionFlag = #{g.distributionFlag}
+        <where>
+			 goodsId = #{g.goodsId}
+		</where>
+	</update>
+
+
+	<select id="getGoodListBySecondClassifyId" resultType="com.vicmob.shoppingmall.web.goods.entity.Goods">
+		select  <include refid ="select_items" /> from mall_goods
+		<where>
+			secondClassifyId = #{secondClassifyId} and deleteFlag = 0
+		</where>
+	</select>
+
+	<update id="updateSailed">
+		update mall_goods set sailed = sailed + #{num}
+		<where>
+			goodsId = #{goodsId}
+		</where>
+	</update>
+
+    <update id="reduceSailed">
+        update mall_goods set sailed = sailed - #{num}
+        <where>
+            goodsId = #{goodsId}
+        </where>
+    </update>
+
+    <update id="updateDistributionFlag">
+        update mall_goods set distributionFlag = #{distributionFlag}
+        <where>
+            goodsId = #{goodsId}
+        </where>
+    </update>
+
+    <select id="getGoodsWithDistributionFlag">
+        select * from mall_goods
+        <where>
+            minaId = #{minaId} and distributionFlag = #{flag}
+        </where>
+    </select>
+
+
+</mapper>

@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.vicmob.shoppingmall.web.goodsAPI.dao.MallGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoods" >
+    <id column="goodsId" property="goodsid" jdbcType="INTEGER" />
+    <result column="minaId" property="minaid" jdbcType="INTEGER" />
+    <result column="classifyId" property="classifyid" jdbcType="INTEGER" />
+    <result column="secondClassifyId" property="secondclassifyid" jdbcType="INTEGER" />
+    <result column="goodsName" property="goodsname" jdbcType="VARCHAR" />
+    <result column="picUrl" property="picurl" jdbcType="VARCHAR" />
+    <result column="detailPicUrl" property="detailpicurl" jdbcType="VARCHAR" />
+    <result column="sailed" property="sailed" jdbcType="INTEGER" />
+    <result column="label" property="label" jdbcType="VARCHAR" />
+    <result column="saleFlag" property="saleflag" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="deleteFlag" property="deleteflag" jdbcType="INTEGER" />
+    <result column="showPrice" property="showprice" jdbcType="DECIMAL" />
+    <result column="showFlag" property="showflag" jdbcType="INTEGER" />
+    <result column="distributionFlag" property="distributionflag" jdbcType="INTEGER" />
+    <result column="collageSailed" property="collagesailed" jdbcType="INTEGER" />
+    <result column="collageFlag" property="collageflag" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoods" extends="BaseResultMap" >
+    <result column="parameters" property="parameters" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    goodsId, minaId, classifyId, secondClassifyId, goodsName, picUrl, detailPicUrl, sailed, 
+    `label`, saleFlag, sort, description, deleteFlag, showPrice, showFlag, distributionFlag, 
+    collageSailed, collageFlag
+  </sql>
+  <sql id="Blob_Column_List" >
+    `parameters`
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from mall_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mall_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithBLOBsAndPage" resultMap="ResultMapWithBLOBs" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from mall_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleAndPage" resultMap="BaseResultMap" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mall_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsExample" >
+    delete from mall_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoodsExample" resultType="java.lang.Integer" >
+    select count(*) from mall_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mall_goods
+    <set >
+      <if test="record.goodsid != null" >
+        goodsId = #{record.goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="record.minaid != null" >
+        minaId = #{record.minaid,jdbcType=INTEGER},
+      </if>
+      <if test="record.classifyid != null" >
+        classifyId = #{record.classifyid,jdbcType=INTEGER},
+      </if>
+      <if test="record.secondclassifyid != null" >
+        secondClassifyId = #{record.secondclassifyid,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsname != null" >
+        goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picurl != null" >
+        picUrl = #{record.picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailpicurl != null" >
+        detailPicUrl = #{record.detailpicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sailed != null" >
+        sailed = #{record.sailed,jdbcType=INTEGER},
+      </if>
+      <if test="record.label != null" >
+        `label` = #{record.label,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleflag != null" >
+        saleFlag = #{record.saleflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.sort != null" >
+        sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteflag != null" >
+        deleteFlag = #{record.deleteflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.showprice != null" >
+        showPrice = #{record.showprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.showflag != null" >
+        showFlag = #{record.showflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.distributionflag != null" >
+        distributionFlag = #{record.distributionflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.collagesailed != null" >
+        collageSailed = #{record.collagesailed,jdbcType=INTEGER},
+      </if>
+      <if test="record.collageflag != null" >
+        collageFlag = #{record.collageflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.parameters != null" >
+        `parameters` = #{record.parameters,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update mall_goods
+    set goodsId = #{record.goodsid,jdbcType=INTEGER},
+      minaId = #{record.minaid,jdbcType=INTEGER},
+      classifyId = #{record.classifyid,jdbcType=INTEGER},
+      secondClassifyId = #{record.secondclassifyid,jdbcType=INTEGER},
+      goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      picUrl = #{record.picurl,jdbcType=VARCHAR},
+      detailPicUrl = #{record.detailpicurl,jdbcType=VARCHAR},
+      sailed = #{record.sailed,jdbcType=INTEGER},
+      `label` = #{record.label,jdbcType=VARCHAR},
+      saleFlag = #{record.saleflag,jdbcType=INTEGER},
+      sort = #{record.sort,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR},
+      deleteFlag = #{record.deleteflag,jdbcType=INTEGER},
+      showPrice = #{record.showprice,jdbcType=DECIMAL},
+      showFlag = #{record.showflag,jdbcType=INTEGER},
+      distributionFlag = #{record.distributionflag,jdbcType=INTEGER},
+      collageSailed = #{record.collagesailed,jdbcType=INTEGER},
+      collageFlag = #{record.collageflag,jdbcType=INTEGER},
+      `parameters` = #{record.parameters,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mall_goods
+    set goodsId = #{record.goodsid,jdbcType=INTEGER},
+      minaId = #{record.minaid,jdbcType=INTEGER},
+      classifyId = #{record.classifyid,jdbcType=INTEGER},
+      secondClassifyId = #{record.secondclassifyid,jdbcType=INTEGER},
+      goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      picUrl = #{record.picurl,jdbcType=VARCHAR},
+      detailPicUrl = #{record.detailpicurl,jdbcType=VARCHAR},
+      sailed = #{record.sailed,jdbcType=INTEGER},
+      `label` = #{record.label,jdbcType=VARCHAR},
+      saleFlag = #{record.saleflag,jdbcType=INTEGER},
+      sort = #{record.sort,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR},
+      deleteFlag = #{record.deleteflag,jdbcType=INTEGER},
+      showPrice = #{record.showprice,jdbcType=DECIMAL},
+      showFlag = #{record.showflag,jdbcType=INTEGER},
+      distributionFlag = #{record.distributionflag,jdbcType=INTEGER},
+      collageSailed = #{record.collagesailed,jdbcType=INTEGER},
+      collageFlag = #{record.collageflag,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from mall_goods
+    where goodsId = #{goodsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mall_goods
+    where goodsId = #{goodsid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoods" useGeneratedKeys="true" keyProperty="goodsid" >
+    insert into mall_goods (minaId, classifyId, secondClassifyId, 
+      goodsName, picUrl, detailPicUrl, 
+      sailed, `label`, saleFlag, 
+      sort, description, deleteFlag, 
+      showPrice, showFlag, distributionFlag, 
+      collageSailed, collageFlag, `parameters`
+      )
+    values (#{minaid,jdbcType=INTEGER}, #{classifyid,jdbcType=INTEGER}, #{secondclassifyid,jdbcType=INTEGER}, 
+      #{goodsname,jdbcType=VARCHAR}, #{picurl,jdbcType=VARCHAR}, #{detailpicurl,jdbcType=VARCHAR}, 
+      #{sailed,jdbcType=INTEGER}, #{label,jdbcType=VARCHAR}, #{saleflag,jdbcType=INTEGER}, 
+      #{sort,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{deleteflag,jdbcType=INTEGER}, 
+      #{showprice,jdbcType=DECIMAL}, #{showflag,jdbcType=INTEGER}, #{distributionflag,jdbcType=INTEGER}, 
+      #{collagesailed,jdbcType=INTEGER}, #{collageflag,jdbcType=INTEGER}, #{parameters,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoods" useGeneratedKeys="true" keyProperty="goodsid" >
+    insert into mall_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      minaId,
+      classifyId,
+      secondClassifyId,
+      goodsName,
+      picUrl,
+      detailPicUrl,
+      sailed,
+      `label`,
+      saleFlag,
+      sort,
+      description,
+      deleteFlag,
+      showPrice,
+      showFlag,
+      distributionFlag,
+      collageSailed,
+      collageFlag,
+      `parameters`,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{minaid,jdbcType=INTEGER},
+      #{classifyid,jdbcType=INTEGER},
+      #{secondclassifyid,jdbcType=INTEGER},
+      #{goodsname,jdbcType=VARCHAR},
+      #{picurl,jdbcType=VARCHAR},
+      #{detailpicurl,jdbcType=VARCHAR},
+      #{sailed,jdbcType=INTEGER},
+      #{label,jdbcType=VARCHAR},
+      #{saleflag,jdbcType=INTEGER},
+      #{sort,jdbcType=INTEGER},
+      #{description,jdbcType=VARCHAR},
+      #{deleteflag,jdbcType=INTEGER},
+      #{showprice,jdbcType=DECIMAL},
+      #{showflag,jdbcType=INTEGER},
+      #{distributionflag,jdbcType=INTEGER},
+      #{collagesailed,jdbcType=INTEGER},
+      #{collageflag,jdbcType=INTEGER},
+      #{parameters,jdbcType=LONGVARCHAR},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoods" >
+    update mall_goods
+    <set >
+      <if test="minaid != null" >
+        minaId = #{minaid,jdbcType=INTEGER},
+      </if>
+      <if test="classifyid != null" >
+        classifyId = #{classifyid,jdbcType=INTEGER},
+      </if>
+      <if test="secondclassifyid != null" >
+        secondClassifyId = #{secondclassifyid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsname != null" >
+        goodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="picurl != null" >
+        picUrl = #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="detailpicurl != null" >
+        detailPicUrl = #{detailpicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="sailed != null" >
+        sailed = #{sailed,jdbcType=INTEGER},
+      </if>
+      <if test="label != null" >
+        `label` = #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="saleflag != null" >
+        saleFlag = #{saleflag,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteflag != null" >
+        deleteFlag = #{deleteflag,jdbcType=INTEGER},
+      </if>
+      <if test="showprice != null" >
+        showPrice = #{showprice,jdbcType=DECIMAL},
+      </if>
+      <if test="showflag != null" >
+        showFlag = #{showflag,jdbcType=INTEGER},
+      </if>
+      <if test="distributionflag != null" >
+        distributionFlag = #{distributionflag,jdbcType=INTEGER},
+      </if>
+      <if test="collagesailed != null" >
+        collageSailed = #{collagesailed,jdbcType=INTEGER},
+      </if>
+      <if test="collageflag != null" >
+        collageFlag = #{collageflag,jdbcType=INTEGER},
+      </if>
+      <if test="parameters != null" >
+        `parameters` = #{parameters,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where goodsId = #{goodsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoods" >
+    update mall_goods
+    set minaId = #{minaid,jdbcType=INTEGER},
+      classifyId = #{classifyid,jdbcType=INTEGER},
+      secondClassifyId = #{secondclassifyid,jdbcType=INTEGER},
+      goodsName = #{goodsname,jdbcType=VARCHAR},
+      picUrl = #{picurl,jdbcType=VARCHAR},
+      detailPicUrl = #{detailpicurl,jdbcType=VARCHAR},
+      sailed = #{sailed,jdbcType=INTEGER},
+      `label` = #{label,jdbcType=VARCHAR},
+      saleFlag = #{saleflag,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      deleteFlag = #{deleteflag,jdbcType=INTEGER},
+      showPrice = #{showprice,jdbcType=DECIMAL},
+      showFlag = #{showflag,jdbcType=INTEGER},
+      distributionFlag = #{distributionflag,jdbcType=INTEGER},
+      collageSailed = #{collagesailed,jdbcType=INTEGER},
+      collageFlag = #{collageflag,jdbcType=INTEGER},
+      `parameters` = #{parameters,jdbcType=LONGVARCHAR}
+    where goodsId = #{goodsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallGoods" >
+    update mall_goods
+    set minaId = #{minaid,jdbcType=INTEGER},
+      classifyId = #{classifyid,jdbcType=INTEGER},
+      secondClassifyId = #{secondclassifyid,jdbcType=INTEGER},
+      goodsName = #{goodsname,jdbcType=VARCHAR},
+      picUrl = #{picurl,jdbcType=VARCHAR},
+      detailPicUrl = #{detailpicurl,jdbcType=VARCHAR},
+      sailed = #{sailed,jdbcType=INTEGER},
+      `label` = #{label,jdbcType=VARCHAR},
+      saleFlag = #{saleflag,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      deleteFlag = #{deleteflag,jdbcType=INTEGER},
+      showPrice = #{showprice,jdbcType=DECIMAL},
+      showFlag = #{showflag,jdbcType=INTEGER},
+      distributionFlag = #{distributionflag,jdbcType=INTEGER},
+      collageSailed = #{collagesailed,jdbcType=INTEGER},
+      collageFlag = #{collageflag,jdbcType=INTEGER}
+    where goodsId = #{goodsid,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="getgoodsInfoByOrerId" parameterType="java.lang.Integer" resultType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallEvaluate">
+    select minaId,classifyId,secondClassifyId,goodsId from mall_goods where goodsId = #{goodsId}
+  </select>
+
+  <select id="queryGoodsByKey" resultType="com.vicmob.shoppingmall.web.goodsAPI.model.MallGoodsVO">
+    select a.*,b.highPrice,b.lowPrice,b.totalStock,c.collageActivityId,c.collageActivityPeople,c.remainingPreferentialDay,c.collageLowPrice,c.collageHighPrice,
+    IFNULL((c.partsNumber+a.collageSailed),0) as partsNumber,c.collageActivityStatus,IFNULL(k.surplusNum,c.limitedPurchase) as limitedPurchase,g.commissionMode,g.fixedCommission,g.percentageCommission,
+    f.minAmount from mall_goods a
+    LEFT JOIN(select max(price) highPrice,min(price) lowPrice,SUM(stock) totalStock,goodsId from mall_specification where deleteFlag = 0 GROUP BY goodsId)b on a.goodsId=b.goodsId
+    LEFT JOIN(select collageActivityId,collageActivityPeople,UNIX_TIMESTAMP(activityEndDate)-UNIX_TIMESTAMP(now()) as remainingPreferentialDay,
+    min(collageActivityPrice) as collageLowPrice,max(collageActivityPrice) as collageHighPrice,partsNumber,goodsId,collageActivityStatus,limitedPurchase
+    from mall_goods_collage_activity where deleteFlag = 0 and collageActivityStatus = 1 GROUP BY goodsId)c on a.goodsId=c.goodsId
+    left join (select DISTINCT a.goodsId,a.surplusNum from mall_customer_limitPurchase a left join mall_goods_collage_activity b on a.collageActivityId = b.collageActivityId
+    where a.goodsId = #{goodsId} and a.customerId = #{customerId} and b.deleteFlag = 0 and b.collageActivityStatus = 1)k on a.goodsId=k.goodsId
+    left join mall_distribution g on a.goodsId=g.goodsId
+    left join mall_commission f on f.minaId = a.minaId
+    where a.goodsId = #{goodsId} and a.deleteFlag=0 and a.saleFlag = 1
+  </select>
+
+  <select id="getAllSpecificationByGoodsId" resultType="com.vicmob.shoppingmall.web.goodsAPI.entity.MallSpecification">
+    select *
+    from mall_specification
+    where deleteFlag=0 and minaId = #{minaId} and goodsId = #{goodsId}
+  </select>
+
+  <update id="updateCollageFlag" parameterType="java.lang.Integer">
+    update mall_goods SET collageFlag = 1 WHERE goodsId = #{goodsId}
+  </update>
+
+  <select id="getMoreCollageGoods" resultType="com.vicmob.shoppingmall.web.goodsAPI.model.MoreGoodsCollageVO">
+    select c.* from(select a.goodsId as goodsid, a.minaId as minaid,a.classifyId as classifyid,a.secondClassifyId as secondclassifyid,
+    a.goodsName as goodsname,a.picUrl as picurl,a.detailPicUrl as detailpicurl,a.sailed as sailed,a.label,a.saleFlag as saleflag,a.parameters,
+    a.sort,a.description,a.deleteFlag as deleteflag,a.showPrice as showprice,a.showFlag as showflag,a.distributionFlag as distributionflag,
+    a.collageSailed as collagesailed,a.collageFlag as collageflag,IFNULL((b.partsNumber+a.collageSailed),0) as partsnumber,min(b.collageActivityPrice) as collageactivityprice
+    from mall_goods a
+    left join mall_goods_collage_activity b on a.goodsId = b.goodsId
+    where a.minaId = #{minaId} and a.deleteFlag= 0 and a.saleFlag = 1 and a.collageFlag = 1
+    and b.collageActivityStatus=1 and b.deleteFlag = 0
+    <if test="goodsName!= null and goodsName!='' ">
+      and a.goodsName like concat('%',#{goodsName},'%')
+    </if>
+    GROUP BY a.goodsId order by b.createDate desc) c where c.collageActivityPrice is not null and c.collageActivityPrice!=''
+  </select>
+
+  <select id="getAllGoodsList" resultMap="ResultMapWithBLOBs">
+    select m.* FROM
+    (select a.*,SUM(b.stock) as total from mall_goods a
+    LEFT JOIN mall_specification b on a.goodsId = b.goodsId
+    where a.minaId = #{minaId} and a.secondClassifyId = #{secondClassifyId} and a.deleteFlag = 0 and a.saleFlag = 1 and a.goodsId not in
+    (select DISTINCT goodsId from mall_goods_collage_activity where deleteFlag = 0 and (collageActivityStatus = 0 or collageActivityStatus = 1))
+    GROUP BY a.goodsId)m where m.total>0
+  </select>
+
+  <select id="getAllGoodsListByEdit" resultMap="ResultMapWithBLOBs">
+    select m.* FROM
+    (select a.*,SUM(b.stock) as total from mall_goods a
+    LEFT JOIN mall_specification b on a.goodsId = b.goodsId
+    where a.minaId = #{minaId} and a.secondClassifyId = #{secondClassifyId} and a.deleteFlag = 0 and a.saleFlag = 1 GROUP BY a.goodsId)m where m.total>0
+  </select>
+
+  <select id="getGoodsList" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from mall_goods
+    where minaId = #{minaId} and secondClassifyId = #{secondClassifyId} and deleteFlag = 0 and saleFlag = 1
+    <if test="goodsName!=null and goodsName!='' ">
+      and goodsName = #{goodsName}
+    </if>
+    ORDER BY sort
+  </select>
+
+  <update id="updateCollageSailed">
+    update mall_goods set collageSailed = collageSailed + #{num}
+    where goodsId = #{goodsId}
+  </update>
+
+  <select id="checkCollageUsed" resultType="java.lang.Integer">
+    select count(1) from mall_goods_collage where customerId = #{customerId} and goodsId = #{goodsId} and collageStatus = 1
+  </select>
+
+  <update id="updateSailed">
+    update mall_goods set sailed = sailed - #{num}
+    where goodsId = #{goodsId}
+  </update>
+
+  <update id="updateCollageFlagUnStart">
+    update mall_goods SET collageFlag = 1 WHERE goodsId =#{goodsId}
+  </update>
+</mapper>
